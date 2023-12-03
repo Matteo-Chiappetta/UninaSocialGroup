@@ -1,0 +1,5 @@
+Notazione sui vincoli
+1)vincolo tra Utente e gruppo : se un entità utente è di tipo Utente_Semplice non può avere l'associazione "creato_da" all' entità gruppo.
+2)Vincolo di Post : Se un post è di tipo : Post_Semplice l'attributo File di post è NULL.
+3)Vincolo di POst : Se l'attributo File di Post non è NULL implica che Post è di tipo : Post_Con_Media.
+
