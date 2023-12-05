@@ -3,3 +3,4 @@ Notazione sui vincoli
 2)Vincolo di Post : Se un post è di tipo : Post_Semplice l'attributo File di post è NULL.
 3)Vincolo di POst : Se l'attributo File di Post non è NULL implica che Post è di tipo : Post_Con_Media.
 
+Relazione avvisa possiamo rimuoverla poiché utente è già collegato al gruppo da cui parte la notifica
