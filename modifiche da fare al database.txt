@@ -1,0 +1,1 @@
+1)ridefinire la pk id_post come integer che si autoincrementa
