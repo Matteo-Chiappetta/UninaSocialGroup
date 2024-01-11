@@ -49,7 +49,7 @@ create table Post(
 	ora time,
 	didascalia varchar(300),
 	percorso_file varchar(100),
-	tipo_file varchar(20) not null check(tipo_file IN ('post_semplice','post_con_media' )),
+	tipo_file varchar(20) not null check(tipo_file IN ('post_semplice','post_con_media')),
 	email_creatore_post varchar(60),
 	tag_gruppo varchar(20),
 	constraint fk_tag foreign key (tag_gruppo) references gruppo(tag),

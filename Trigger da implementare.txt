@@ -1,0 +1,15 @@
+Trigger:
+1)Vincolo di Post : Se un post è di tipo : Post_Semplice l'attributo File di post è NULL.
+  Vincolo di POst : Se l'attributo File di Post non è NULL implica che Post è di tipo : Post_Con_Media.
+
+Query:
+Create trigger filePresenteInPost 
+before 
+INSERT ON Post
+FOR EACH ROW 
+BEGIN
+IF percorso_file == NULL THEN
+new.tipo_file = 'post_semplice'
+ELSE
+new.tipo_file = 'post_con_media'
+END
