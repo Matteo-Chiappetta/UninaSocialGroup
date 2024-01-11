@@ -19,6 +19,7 @@ create table Amicizia(
 );
 
 -------------------------------------------------------------------------------------------------------
+//ATTENZIONE
 create table profilo(
 	img_profilo varchar(100),
 	descrizione varchar(300),
@@ -43,7 +44,7 @@ create table partecipanti_al_gruppo(
 );
 ----------------------------------------------------------------------------------------
 create table Post(
-	id_post integer PRIMARY KEY AUTO INCREMENT,		//CONTROLLA SINTASSI.
+	id_post SERIAL PRIMARY KEY,		--CONTROLLA SINTASSI.
 	data date,
 	ora time,
 	didascalia varchar(300),
@@ -57,10 +58,10 @@ create table Post(
 --------------------------------------------------------------------------------------------------------
 
 create table notifica(
-	id_notifica integer primary key AUTO INCREMENT,
+	id_notifica SERIAL primary key ,
 	data_notifica date,
 	ora_notifica time,
-	id_post_pubblicato char(5),
+	id_post_pubblicato integer,
 	constraint fk_post foreign key (id_post_pubblicato) references post(id_post)
 );
 
@@ -83,7 +84,8 @@ create table commento(
 	email_utente varchar(60),
 	id_post integer,
 	constraint fk_email foreign key (email_utente) references Utente(email),
-	constraint fk_post foreign key (id_post) references post(id_post)
+	constraint fk_post foreign key (id_post) references post(id_post),
+	Primary key (id_post,email_utente,data_commento,ora_commento)
 );
 
 --------------------------------------------------------------------------------------------

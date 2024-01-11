@@ -2,5 +2,15 @@ Notazione sui vincoli
 1)vincolo tra Utente e gruppo : se un entità utente è di tipo Utente_Semplice non può avere l'associazione "creato_da" all' entità gruppo.
 2)Vincolo di Post : Se un post è di tipo : Post_Semplice l'attributo File di post è NULL.
 3)Vincolo di POst : Se l'attributo File di Post non è NULL implica che Post è di tipo : Post_Con_Media.
+4)data e ora del commento del post non può essere antecedente alla data e ora della pubblicazione del post.
+5)leggittimita dell'email verificare che abbia la @.
+6)(Gia vinvolato dal not null nella tabella utente)vincolo di username senza caratteri.
+7)VIncolo verifica password con carattere maiuscolo,numeri, caratteri speciali e che abbia almeno 8 caratteri.
+8)Vincolo sul tipo del file(es:.png,.jpg) dell'immagine del profilo di un utente.
+9)Vincolo su tabella amicizia in cui un utente può essere amico ad un altro utente una sola volta.
+10)Vincolo il tema di un gruppo deve essere specificato(not null tabella gruppo).
+11)Vincolo sul tipo del file del post con MEdia es(può essere di tipo .mp4,.gif ecc)ma non di tipo .exe.
+12)Vincolo sulle parolacce sui didascalia dei post,commenti,nomi dei gruppi,username.
+13)data e ora della notifica del post non può essere antecedente alla data e ora della pubblicazione del post.
 
 Relazione avvisa possiamo rimuoverla poiché utente è già collegato al gruppo da cui parte la notifica
