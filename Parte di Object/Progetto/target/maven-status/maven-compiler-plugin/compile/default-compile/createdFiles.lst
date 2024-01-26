@@ -1,11 +1,5 @@
-org\openjfx\Progetto\Entity\Post.class
-org\openjfx\Progetto\Entity\MiPiace.class
-org\openjfx\Progetto\Entity\Interazione.class
-org\openjfx\Progetto\App.class
-org\openjfx\Progetto\Entity\Utente.class
-org\openjfx\Progetto\Boundary\SecondaryController.class
-org\openjfx\Progetto\Entity\Commento.class
-org\openjfx\Progetto\Entity\Notifica.class
+org\openjfx\Progetto\SecondaryController.class
 module-info.class
-org\openjfx\Progetto\Boundary\PrimaryController.class
-org\openjfx\Progetto\Entity\Gruppo.class
+org\openjfx\Progetto\Boundary\FinestraPrincipaleController.class
+org\openjfx\Progetto\App.class
+org\openjfx\Progetto\PrimaryController.class
