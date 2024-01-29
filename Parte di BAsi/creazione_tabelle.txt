@@ -15,7 +15,7 @@ create table Amicizia(
 	email_utente_2 varchar(60),
 	constraint fk_utente_1 Foreign key (email_utente_1)references Utente(email) ON DELETE CASCADE,
 	constraint fk_utente_2 Foreign key (email_utente_2)references Utente(email) ON DELETE CASCADE,
-	constraint amicizia_unica unique (email_utente_1, email_utente_2)
+	constraint amicizia_unica UNIQUE (email_utente_1, email_utente_2)
 );
 
 -------------------------------------------------------------------------------------------------------
@@ -29,14 +29,14 @@ create table profilo(
 
 //TABELLA RIMOSSA: ACCORPATA CON UTENTE.
 ---------------------------------------------------------------------------
-create table gruppo(
+create table Gruppo(
 	tag varchar(20) Primary key,
 	tema varchar(20) not null,
 	email_creatore varchar(60)not null,
 	constraint fk_creatore foreign key(email_creatore) references Utente (email)
 );
 ----------------------------------------------------------------------------------------
-create table partecipanti_al_gruppo(
+create table Partecipanti_al_gruppo(
 	email_membro varchar(60),
 	tag_gruppo varchar(20),
 	constraint fk_email foreign key (email_membro) references Utente(email) on delete cascade,
@@ -57,7 +57,7 @@ create table Post(
 );
 --------------------------------------------------------------------------------------------------------
 
-create table notifica(
+create table Notifica(
 	id_notifica SERIAL primary key ,
 	data_notifica date,
 	ora_notifica time,
@@ -77,7 +77,7 @@ create table Raggiunge(
 
 ----------------------------------------------------------------------------------
 
-create table commento(
+create table Commento(
 	data_commento date not null,
 	ora_commento time not null,
 	commento varchar(300)not null,
@@ -90,7 +90,7 @@ create table commento(
 
 --------------------------------------------------------------------------------------------
 
-create table mi_piace(
+create table Mi_piace(
 	data_commento date not null,
 	ora_commento time not null,
 	email_utente varchar(60),
