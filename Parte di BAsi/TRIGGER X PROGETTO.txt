@@ -1,0 +1,191 @@
+TRIGGER X PROGETTO
+
+Trigger:
+1)Vincolo di Post : Se un post è di tipo : Post_Semplice l'attributo File di post è NULL.
+2) Vincolo di POst : Se l'attributo File di Post non è NULL implica che Post è di tipo : Post_Con_Media.
+
+CREATE TRIGGER filePresenteInPost 
+BEFORE INSERT ON Post
+FOR EACH ROW 
+BEGIN
+
+IF percorso_file == NULL THEN
+	NEW.tipo_file = 'post_semplice';
+ELSE
+	NEW.tipo_file = 'post_con_media';
+ENDIF;
+
+END;
+
+
+3)data e ora del commento del post non può essere antecedente alla data e ora della pubblicazione del post.
+
+CREATE TRIGGER dataCommentoValida
+BEFORE INSERT ON Commento
+FOR EACH ROW
+
+DECLARE
+	e_data_non_valida EXCEPTION;
+	PRAGMA EXCEPTION_INIT( e_data_non_valida, -20001 );
+
+	data_post Post.data%TYPE;
+	ora_post Post.ora%TYPE;
+
+BEGIN
+
+SELECT P.data, P.ora INTO data_post, ora_post
+	FROM Post AS P
+	WHERE NEW.id_post = P.id_post;
+
+IF ( data_post > NEW.data_commento || ora_post > NEW.ora_commento ) THEN
+	RAISE_APPLICATION_ERROR(-20001, 'Data e/o ora non sono valide.');
+ENDIF;
+
+END;
+
+[MA E' DAVVERO NECESSARIO QUESTO TRIGGER? NON POTREMMO SOSTITUIRLO CON LA VERSIONE SUCCESSIVA:]
+
+CREATE TRIGGER dataCommentoValida
+BEFORE INSERT ON Commento
+FOR EACH ROW
+DECLARE
+	current_date DATE;
+	current_time TIME;
+	
+BEGIN
+				 [ATTENZIONE, PER POST, COMMENTO, ECC PENSO CHE DOVREMMO CAMBIARE I TIPI DATA E ORA A UN UNICO TIPO TIMESTAMP, poichè non abbiamo bisogno del millisecondo.]
+
+SELECT SYSDATE
+  INTO current_date
+  FROM dual;
+SELECT SYSDATE
+  INTO current_time
+  FROM dual;
+NEW.data_commento = current_date;
+NEW.ora_commento = current_time;
+
+END;
+
+
+
+4)leggittimita dell'email verificare che abbia la @.
+
+ALTER TABLE Utente
+ADD CONSTRAINT check_email_valida 
+		CHECK (email ~'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$') ;
+
+6)Vincolo verifica password con carattere maiuscolo,numeri, caratteri speciali e che abbia almeno 8 caratteri.
+
+ALTER TABLE Utente
+ADD CONSTRAINT check_password_valida 
+		CHECK (password ~'^[0-9]{1,}$' AND password ~*'^[A-Z]{1,}$' 
+				AND password ~*'^[a-z]{1,}$'  AND password ~*'^[!?@#%&$]{1,}$'
+				AND LENGHT(password) >= 8 ) ;
+
+
+12)data e ora della notifica del post non può essere antecedente alla data e ora della pubblicazione del post.
+[PRIMA FACCIO IN MODO CHE OGNI VOLTA CHE CREO UN POST, LA NOTIFICA VENGA CREATA AUTOMATICAMENTE]
+[CREO ANCHE IL VINCOLO, IN CASO QUALCUNO PROVASSE A INSERIRE UNA NOTIFICA SBAGLIATA MANUALMENTE]
+(devo fare le stesse cose anche per raggiunge)
+
+ALTER TABLE Notifica
+ADD CONSTRAINT  notifica_per_post UNIQUE (id_notifica, id_post_pubblicato)
+
+
+
+CREATE TRIGGER nuova_notifica
+AFTER INSERT ON Post
+FOR EACH ROW
+DECLARE 
+	current_date DATE;
+	current_time TIME;
+
+BEGIN 
+SELECT SYSDATE
+  INTO current_date
+  FROM dual;
+SELECT SYSDATE
+  INTO current_time
+  FROM dual;
+
+INSERT INTO Notifica (data_notifica, ora_notifica, id_post_pubblicato)
+		VALUES(current_date, current_time, NEW.id_post);
+
+END;
+
+
+
+CREATE TRIGGER notifica_valida
+AFTER INSERT ON Post
+FOR EACH ROW
+
+DECLARE
+	e_notifica_non_valida EXCEPTION;
+	PRAGMA EXCEPTION_INIT( e_credit_too_high, -20002 );
+
+	data_post Post.data%TYPE;
+	ora_post Post.ora%TYPE;
+	post Post.id_post%TYPE;
+	num INT;
+
+BEGIN 
+
+SELECT P.id_post, P.data, P.ora INTO post, data_post, ora_post
+	FROM Post AS P
+	WHERE NEW.id_post_pubblicato = P.id_post;
+
+IF( post = NULL ) THEN
+	RAISE_APPLICATION_ERROR(-20002, 'Non esiste post per questa notifica.');
+ENDIF;
+
+IF(data_post > NEW.data_notifica || ora_post > NEW.ora_notifica ) THEN
+	RAISE_APPLICATION_ERROR(-20002, 'Notifica non valida.');
+ENDIF;
+
+SELECT COUNT(N.id_post_pubblicato) INTO num
+	FROM Notifica AS N
+	WHERE NEW.id_post_pubblicato = N.id_post_publicato;
+
+IF( num >= 1 ) THEN
+	RAISE_APPLICATION_ERROR(-20002, 'Già esiste una notifica per questo post.');
+ENDIF;
+
+END;
+
+
+--------------------------------------------------------------------------------------------------------------------------------------
+[RAGGIUNGE]
+
+CREATE TRIGGER notifica_raggiunge_utenti
+AFTER INSERT ON Notifica
+FOR EACH ROW
+DECLARE 
+
+	CURSOR recupera_utenti IS
+		SELECT PG.email_membro
+		FROM (Post P JOIN Gruppo G ON P.tag_gruppo = G.tag ) 
+								JOIN Partecipanti_al_gruppo PG ON G.tag = PG.tag_gruppo
+		WHERE P.id_post = NEW.id_post_pubblicato;
+		
+	email Utente.email%TYPE;
+
+BEGIN
+
+OPEN recupera_utenti;
+
+LOOP
+	FETCH recupera_utenti INTO email;
+	INSERT INTO Raggiunge VALUES
+		(email, NEW.id_notifica);
+ENDLOOP;
+
+END;
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ALTRI TRIGGER E FUNZIONI
+1) Ogni volta che si aggiunge un like, cambia il numero di like ad un post.
+
+ALTER TABLE Post
+ADD COLUMN num_mi_piace INT
+ADD COLUMN num_commenti INT 
