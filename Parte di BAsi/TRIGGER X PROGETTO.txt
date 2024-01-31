@@ -116,12 +116,12 @@ END;
 
 
 CREATE TRIGGER notifica_valida
-AFTER INSERT ON Post
+BEFORE INSERT ON Notifica
 FOR EACH ROW
 
 DECLARE
 	e_notifica_non_valida EXCEPTION;
-	PRAGMA EXCEPTION_INIT( e_credit_too_high, -20002 );
+	PRAGMA EXCEPTION_INIT( e_notifica_non_valida, -20002 );
 
 	data_post Post.data%TYPE;
 	ora_post Post.ora%TYPE;
@@ -189,3 +189,91 @@ ALTRI TRIGGER E FUNZIONI
 ALTER TABLE Post
 ADD COLUMN num_mi_piace INT
 ADD COLUMN num_commenti INT 
+
+
+CREATE TRIGGER aggiorna_numero_like
+AFTER INSERT ON Mi_piace
+FOR EACH ROW
+DECLARE
+	num_mi_piace_prec Post.num_mi_piace%TYPE;
+BEGIN
+
+SELECT P.num_mi_piace INTO num_mi_piace_prec
+	FROM Post AS P
+	WHERE P.id_post = NEW.id_post;
+
+UPDATE Post
+	SET num_mi_piace = num_mi_piace_prec+1
+	WHERE P.id_post = NEW.id_post;
+
+END;
+
+CREATE TRIGGER diminuisci_numero_like
+AFTER DELETE ON Mi_piace
+FOR EACH ROW
+DECLARE
+	num_mi_piace_prec Post.num_mi_piace%TYPE;
+BEGIN
+
+SELECT P.num_mi_piace INTO num_mi_piace_prec
+	FROM Post AS P
+	WHERE P.id_post = OLD.id_post;
+
+UPDATE Post
+	SET num_mi_piace = num_mi_piace_prec-1
+	WHERE P.id_post = NEW.id_post;
+
+END;
+
+2) Ogni volta che si aggiunge un commento, cambia il nummero di commenti ad un post.
+
+CREATE TRIGGER aggiorna_numero_commenti
+AFTER INSERT ON Commento
+FOR EACH ROW
+DECLARE
+	num_commenti_prec Post.num_commenti%TYPE;
+BEGIN
+
+SELECT P.num_commenti INTO num_commenti_prec
+	FROM Post AS P
+	WHERE P.id_post = NEW.id_post;
+
+UPDATE Post
+	SET num_commenti = num_commenti+1
+	WHERE P.id_post = NEW.id_post;
+
+END;
+
+
+
+CREATE TRIGGER diminuisci_numero_commenti
+AFTER DELETE ON Commento
+FOR EACH ROW
+DECLARE
+	num_commenti_prec Post.num_commenti%TYPE;
+BEGIN
+
+SELECT P.num_commenti INTO num_commenti_prec
+	FROM Post AS P
+	WHERE P.id_post = NEW.id_post;
+
+UPDATE Post
+	SET num_commenti = num_commenti-1
+	WHERE P.id_post = NEW.id_post;
+
+END;
+
+
+
+3)Non pubblicare post se contiene una parola censurata.
+[Immaginiamo di avere una stringa che possiamo passare come input con tutte parole da censurare separate da una virgola.]
+
+
+
+CREATE TRIGGER controllo_oscenita
+
+
+
+
+CREATE OR REPLACE FUNCTION contiene_oscenita ( VARCHAR2 IN parole_censurate)
+	RETURN BOOLEAN
