@@ -36,7 +36,7 @@
           <RowConstraints maxHeight="226.80002441406253" minHeight="10.0" prefHeight="172.2000061035156" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label prefHeight="17.0" prefWidth="147.0" style="-fx-background-color: #ffffff; -fx-font-family: 'Arial Rounded MT Bold'; -fx-font-size: 16;" text="Benvenuto su" textFill="#50565e" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+            <Label prefHeight="17.0" prefWidth="147.0" style="-fx-background-color: transparent; -fx-font-family: 'Arial Rounded MT Bold'; -fx-font-size: 16;" text="Benvenuto su" textFill="#50565e" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
                <GridPane.margin>
                   <Insets />
                </GridPane.margin>
@@ -49,7 +49,7 @@
                   <Image url="@../../../../../../../../../../../../../Downloads/USG.jpg" />
                </image>
             </ImageView>
-            <TextField alignment="TOP_LEFT" promptText="Inserire email" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+            <TextField alignment="TOP_LEFT" promptText="Inserire email" style="-fx-background-radius: 20 20 20 20;" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
                <GridPane.margin>
                   <Insets bottom="10.0" />
                </GridPane.margin>
@@ -57,7 +57,7 @@
                   <Cursor fx:constant="TEXT" />
                </cursor>
             </TextField>
-            <PasswordField promptText="Inserire password" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
+            <PasswordField promptText="Inserire password" style="-fx-background-radius: 20 20 20 20;" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
                <GridPane.margin>
                   <Insets bottom="10.0" />
                </GridPane.margin>
@@ -112,7 +112,7 @@
                </font>
             </Text>
             <Text fill="#4a91ff" strokeType="OUTSIDE" strokeWidth="0.0" underline="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="TOP" />
-            <Label layoutX="123.0" layoutY="198.0" prefHeight="22.0" prefWidth="182.0" style="-fx-background-color: #ffffff; -fx-font-family: 'Arial Rounded MT Bold'; -fx-font-size: 19;" text=" UninaSocialGroup" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+            <Label layoutX="123.0" layoutY="198.0" prefHeight="22.0" prefWidth="182.0" style="-fx-background-color: transparent; -fx-font-family: 'Arial Rounded MT Bold'; -fx-font-size: 19;" text=" UninaSocialGroup" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
                <font>
                   <Font size="13.0" />
                </font>

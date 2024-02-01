@@ -277,3 +277,10 @@ CREATE TRIGGER controllo_oscenita
 
 CREATE OR REPLACE FUNCTION contiene_oscenita ( VARCHAR2 IN parole_censurate)
 	RETURN BOOLEAN
+
+
+
+4)quando viene creato un gruppo, automaticamente viene aggiunto il creatore nella lista dei partecipanti.
+
+ALTER TABLE Partecipanti_al_gruppo
+	ADD CONSTRAINT UNIQUE(email_membro, tag_gruppo)
