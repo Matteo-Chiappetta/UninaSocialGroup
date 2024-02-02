@@ -8,7 +8,7 @@ public class SecondaryController {
 
     @FXML
     private void switchToPrimary() throws IOException {
-    	App.setRoot("FinestraPrincipale");
+    	App.setRoot("ProvaFinestraLogin");
     }
     
 }
