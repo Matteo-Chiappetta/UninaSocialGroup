@@ -18,7 +18,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("FinestraPrincipale"), 640, 480);
+        scene = new Scene(loadFXML("ProvaFinestraLogin"), 873, 609);
         //String css = this.getClass().getResource("Tema.css").toExternalForm();
         //scene.getStylesheets().add(css);
         stage.setScene(scene);
