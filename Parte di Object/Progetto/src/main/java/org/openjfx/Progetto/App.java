@@ -18,7 +18,11 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("FinestraPrincipale"), 640, 480);
+<<<<<<< HEAD
+        scene = new Scene(loadFXML("ProvaFinestraLogin"), 873, 609);
+=======
+        scene = new Scene(loadFXML("ProvaFinestraLogin"), 640, 480);
+>>>>>>> 50e2d1aaff0b0f629460a279fc42e7cbad9ac9bf
         //String css = this.getClass().getResource("Tema.css").toExternalForm();
         //scene.getStylesheets().add(css);
         stage.setScene(scene);
@@ -35,6 +39,7 @@ public class App extends Application {
     }
 
     private static Parent loadFXML(String fxml) throws IOException {
+    	//System.out.println(App.class.getResource(fxml + ".fxml"));
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
     }
