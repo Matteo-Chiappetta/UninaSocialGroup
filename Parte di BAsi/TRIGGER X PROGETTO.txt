@@ -191,7 +191,7 @@ ADD COLUMN num_mi_piace INT
 ADD COLUMN num_commenti INT 
 
 
-CREATE TRIGGER aggiorna_numero_like
+CREATE TRIGGER aggiorna_numero_mp
 AFTER INSERT ON Mi_piace
 FOR EACH ROW
 DECLARE
@@ -208,7 +208,7 @@ UPDATE Post
 
 END;
 
-CREATE TRIGGER diminuisci_numero_like
+CREATE TRIGGER diminuisci_numero_mp
 AFTER DELETE ON Mi_piace
 FOR EACH ROW
 DECLARE
@@ -224,6 +224,33 @@ UPDATE Post
 	WHERE P.id_post = NEW.id_post;
 
 END;
+
+
+
+CREATE TRIGGER num_mp_validi
+BEFORE UPDATE ON POST
+FOR EACH ROW
+WHEN (NEW.num_mi_piace <> OLD.num_mi_piace)
+DECLARE
+
+	e_nmp_non_valido EXCEPTION;
+	PRAGMA EXCEPTION_INIT( e_nmp_non_valido, -20003 );
+
+	num_mp Post.num_mi_piace%TYPE;
+
+BEGIN
+SELECT COUNT(*) INTO num_mp
+	FROM Mi_piace AS MP
+	WHERE MP.id_post = NEW.id_post;
+
+IF ( NEW.num_mi_piace <> num_mp) THEN
+	RAISE EXCEPTION(-20003);
+ENDIF;
+
+END;
+
+
+
 
 2) Ogni volta che si aggiunge un commento, cambia il nummero di commenti ad un post.
 
@@ -284,3 +311,14 @@ CREATE OR REPLACE FUNCTION contiene_oscenita ( VARCHAR2 IN parole_censurate)
 
 ALTER TABLE Partecipanti_al_gruppo
 	ADD CONSTRAINT UNIQUE(email_membro, tag_gruppo)
+
+
+CREATE TRIGGER nuovo_gruppo
+AFTER INSERT ON Gruppo
+FOR EACH ROW
+BEGIN
+
+INSERT INTO Partecipanti_al_gruppo 
+	VALUES(NEW.email_creatore, NEW.tag);
+
+END;	
