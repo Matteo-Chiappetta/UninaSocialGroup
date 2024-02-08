@@ -99,3 +99,14 @@ create table Mi_piace(
 	constraint fk_post foreign key (id_post) references post(id_post),
 	Constraint mi_piace_unica unique (email_utente, id_post)
 );
+
+-----------------------------------------------------------------------------------
+create table richiesta(
+	accettato BOOLEAN,
+	data_richiesta date,
+	ora_richiesta time,
+	email_utente varchar(60),
+	tag_gruppo varchar(20),
+	constraint fk_tag foreign key(tag_gruppo) references Gruppo (tag),
+	constraint fk_utente foreign key(email_utente) references Utente (email)
+)
