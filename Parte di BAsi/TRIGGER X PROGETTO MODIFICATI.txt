@@ -1,0 +1,597 @@
+TRIGGER X PROGETTO MODIFICATI
+
+?)Data e ora del post inserite automaticamente.
+
+FUNZIONE:
+
+CREATE OR REPLACE FUNCTION assegnazioneDataPost()
+RETURNS TRIGGER
+language plpgsql
+AS $assegnazioneDataPost$
+DECLARE
+	current_date DATE;
+	current_time TIME;
+	
+BEGIN
+
+	SELECT SYSDATE INTO current_date
+  		FROM dual;
+	SELECT SYSDATE INTO current_time
+ 		FROM dual;
+
+	NEW.data = current_date;
+	NEW.ora = current_time;
+
+END;
+$assegnazioneDataPost$
+
+TRIGGER:
+CREATE TRIGGER assegnazioneDataPost
+BEFORE INSERT ON Post
+FOR EACH ROW EXECUTE assegnazioneDataPost();
+
+
+-------------------------------------------------------------------------------------------------------------------------
+
+3)data e ora del commento del post non può essere antecedente alla data e ora della pubblicazione del post.
+
+FUNZIONE:
+CREATE OR REPLACE FUNCTION assegnazioneDataCommento()
+RETURNS TRIGGER
+language plpgsql
+AS $assegnazioneDataCommento$
+DECLARE
+	current_date DATE;
+	current_time TIME;
+
+	e_data_non_valida EXCEPTION;
+	PRAGMA EXCEPTION_INIT( e_data_non_valida, -20001 );
+
+	data_post Post.data%TYPE;
+	ora_post Post.ora%TYPE;
+	
+BEGIN
+
+	SELECT SYSDATE INTO current_date
+ 		FROM dual;
+	SELECT SYSDATE INTO current_time
+  		FROM dual;
+
+	SELECT P.data, P.ora INTO data_post, ora_post
+		FROM Post AS P
+		WHERE NEW.id_post = P.id_post;
+
+	IF ( data_post > NEW.data_commento || ora_post > NEW.ora_commento ) THEN
+		RAISE e_data_non_valida;
+	ELSE
+		NEW.data_commento = current_date;
+		NEW.ora_commento = current_time;
+	ENDIF;
+
+EXCEPTION
+	WHEN e_data_non_valida THEN
+		DBMS_OUTPUT.putline('Data o ora del commento non valida.');
+		ROLLBACK??
+
+
+END;
+$assegnazioneDataCommento$;
+
+TRIGGER:
+CREATE TRIGGER assegnazioneDataCommento
+BEFORE INSERT ON Commento
+FOR EACH ROW EXECUTE FUNCTION assegnazioneDataCommento();
+
+
+
+3.2)data e ora del mi piace del post non può essere antecedente alla data e ora della pubblicazione del post.
+
+FUNZIONE:
+CREATE OR REPLACE FUNCTION assegnazioneDataMiPiace()
+RETURNS TRIGGER
+language plpgsql
+AS $assegnazioneDataMiPiace$
+DECLARE
+	current_date DATE;
+	current_time TIME;
+
+	e_data_non_valida EXCEPTION;
+	PRAGMA EXCEPTION_INIT( e_data_non_valida, -20001 );
+
+	data_post Post.data%TYPE;
+	ora_post Post.ora%TYPE;
+	
+BEGIN
+
+	SELECT SYSDATE INTO current_date
+ 		FROM dual;
+	SELECT SYSDATE INTO current_time
+  		FROM dual;
+
+	SELECT P.data, P.ora INTO data_post, ora_post
+		FROM Post AS P
+		WHERE NEW.id_post = P.id_post;
+
+	IF ( data_post > NEW.data_commento || ora_post > NEW.ora_commento ) THEN
+		RAISE e_data_non_valida;
+	ELSE
+		NEW.data_commento = current_date;
+		NEW.ora_commento = current_time;
+	ENDIF;
+
+EXCEPTION
+	WHEN e_data_non_valida THEN
+		DBMS_OUTPUT.putline('Data o ora del mi piace non valida.);
+		ROLLBACK??
+
+
+END;
+$assegnazioneDataMiPiace$;
+
+TRIGGER:
+CREATE TRIGGER assegnazioneDataMiPiace
+BEFORE INSERT ON Mi_Piace
+FOR EACH ROW EXECUTE FUNCTION assegnazioneDataMiPiace();
+
+-------------------------------------------------------------------------------------------------------------------------
+
+
+4)leggittimita dell'email verificare che abbia la @.
+
+ALTER TABLE Utente
+ADD CONSTRAINT check_email_valida 
+		CHECK (email ~'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$') ;
+
+-------------------------------------------------------------------------------------------------------------------------
+
+
+6)Vincolo verifica password con carattere maiuscolo,numeri, caratteri speciali e che abbia almeno 8 caratteri.
+
+ALTER TABLE Utente
+ADD CONSTRAINT check_password_valida 
+		CHECK (password ~'^[0-9]{1,}$' AND password ~*'^[A-Z]{1,}$' 
+				AND password ~*'^[a-z]{1,}$'  AND password ~*'^[!?@#%&$]{1,}$'
+				AND LENGHT(password) >= 8 ) ;
+
+-------------------------------------------------------------------------------------------------------------------------
+
+12.1) Per ogni post pubblicato deve esserci una sola notifica
+
+ALTER TABLE Notifica
+ADD CONSTRAINT  notifica_per_post UNIQUE (id_notifica, id_post_pubblicato); 						//(C'E' GIA??)
+
+
+
+12.2)data e ora della notifica del post non può essere antecedente alla data e ora della pubblicazione del post.
+
+FUNZIONE:
+CREATE OR REPLACE FUNCTION assegnazioneDataNotifica()
+RETURNS TRIGGER
+language plpgsql
+AS $assegnazioneDataNotifica$
+DECLARE
+	current_date DATE;
+	current_time TIME;
+
+	e_data_non_valida EXCEPTION;
+	PRAGMA EXCEPTION_INIT( e_data_non_valida, -20001 );
+
+	data_post Post.data%TYPE;
+	ora_post Post.ora%TYPE;
+	
+BEGIN
+
+	SELECT SYSDATE INTO current_date
+ 		FROM dual;
+	SELECT SYSDATE INTO current_time
+  		FROM dual;
+
+	SELECT P.data, P.ora INTO data_post, ora_post
+		FROM Post AS P
+		WHERE NEW.id_post = P.id_post;
+
+	IF ( data_post > NEW.data_notifica || ora_post > NEW.ora_notifica ) THEN
+		RAISE e_data_non_valida;
+	ELSE
+		NEW.data_commento = current_date;
+		NEW.ora_commento = current_time;
+	ENDIF;
+
+EXCEPTION
+	WHEN e_data_non_valida THEN
+		DBMS_OUTPUT.putline('Data o ora del commento non valida.);
+		ROLLBACK??
+
+
+END;
+$assegnazioneDataNotifica$;
+
+TRIGGER:
+CREATE TRIGGER assegnazioneDataNotifica
+BEFORE INSERT ON Notifica
+FOR EACH ROW EXECUTE FUNCTION assegnazioneDataNotifica();
+
+
+-------------------------------------------------------------------------------------------------------------------------
+
+
+?)Alla creazione di una notifica, la tabella Raggiunge viene popolata, inviando la notifica a tutti i 
+partecipanti del gruppo in cui è stato pubblicato il post.
+
+FUNZIONE:
+CREATE OR REPLACE FUNCTION notificaRaggiungeUtenti()
+RETURNS TRIGGER
+language plpgsql
+AS $notificaRaggiungeUtenti$
+DECLARE 
+
+	CURSOR recupera_utenti IS
+		SELECT PG.email_membro
+		FROM (Post P JOIN Gruppo G ON P.tag_gruppo = G.tag ) 
+								JOIN Partecipanti_al_gruppo PG ON G.tag = PG.tag_gruppo
+		WHERE P.id_post = NEW.id_post_pubblicato;
+		
+	email Utente.email%TYPE;
+
+BEGIN
+
+OPEN recupera_utenti;
+
+LOOP
+	FETCH recupera_utenti INTO email;
+	INSERT INTO Raggiunge VALUES
+		(email, NEW.id_notifica);
+ENDLOOP;
+
+CLOSE recupera_utenti;
+
+END;
+$notificaRaggiungeUtenti$;
+ 
+
+TRIGGER:
+CREATE TRIGGER notificaRaggiungeUtenti
+AFTER INSERT ON Notifica
+FOR EACH ROW notificaRaggiungeUtenti();
+
+-------------------------------------------------------------------------------------------------------------------------
+
+ALTRI TRIGGER E FUNZIONI
+
+
+ALTER TABLE Post
+ADD COLUMN num_mi_piace INT
+ADD COLUMN num_commenti INT 
+
+1.1) Ogni volta che si aggiunge un mi piace, cambia il numero di mi piace ad un post.
+
+FUNZIONE:
+CREATE OR REPLACE FUNCTION aumentaNumMiPiace()
+RETURNS TRIGGER
+language plpgsql
+AS $aumentaNumMiPiace$
+DECLARE
+	num_mp Post.num_mi_piace%TYPE;
+
+BEGIN
+
+	SELECT COUNT(*) INTO num_mp
+		FROM Mi_piace AS MP
+		WHERE MP.id_post = NEW.id_post;
+
+UPDATE Post
+	SET num_mi_piace = num_mp
+	WHERE P.id_post = NEW.id_post;
+
+END;
+$aumentaNumMiPiace$;
+
+
+
+TRIGGER:
+CREATE TRIGGER aumentaNumMiPiace
+AFTER INSERT ON Mi_piace
+FOR EACH ROW EXECUTE aumentaNumMiPiace();
+
+1.2) Ogni volta che si toglie un mi piace, cambia il numero di mi piace ad un post.
+
+FUNZIONE:
+CREATE OR REPLACE FUNCTION diminuisciNumMiPiace()
+RETURNS TRIGGER
+language plpgsql
+AS $diminuisciNumMiPiace$
+DECLARE
+	num_mp Post.num_mi_piace%TYPE;
+
+BEGIN
+
+	SELECT COUNT(*) INTO num_mp
+		FROM Mi_piace AS MP
+		WHERE MP.id_post = OLD.id_post;
+
+	UPDATE Post
+		SET num_mi_piace = num_mp
+		WHERE P.id_post = OLD.id_post;
+
+END;
+$diminuisciNumMiPiace$;
+
+
+
+TRIGGER:
+CREATE TRIGGER diminuisciNumMiPiace
+AFTER DELETE ON Mi_piace
+FOR EACH ROW EXECUTE diminuisciNumMiPiace();
+
+
+-------------------------------------------------------------------------------------------------------------------------
+
+2.1)[stessa cosa di sopra] Ogni volta che si aggiunge un commento, cambia il numero di commenti ad un post.
+
+FUNZIONE:
+CREATE OR REPLACE FUNCTION aumentaNumCommento()
+RETURNS TRIGGER
+language plpgsql
+AS $aumentaNumCommento$
+DECLARE
+	num_cm Post.num_commenti%TYPE;
+
+BEGIN
+
+	SELECT COUNT(*) INTO num_cm
+		FROM Commento AS CM
+		WHERE CM.id_post = NEW.id_post;
+
+UPDATE Post
+	SET num_commenti = num_cm
+	WHERE P.id_post = NEW.id_post;
+
+END;
+$aumentaNumCommento$;
+
+
+TRIGGER:
+CREATE TRIGGER aumentaNumCommento
+AFTER INSERT ON Mi_piace
+FOR EACH ROW EXECUTE aumentaNumCommento();
+
+2.2) Ogni volta che si toglie un commento, cambia il numero di commenti ad un post.
+
+FUNZIONE:
+CREATE OR REPLACE FUNCTION diminuisciNumCommenti()
+RETURNS TRIGGER
+language plpgsql
+AS $diminuisciNumCommenti$
+DECLARE
+	num_cm Post.num_commenti%TYPE;
+
+BEGIN
+
+	SELECT COUNT(*) INTO num_cm
+		FROM Commento AS CM
+		WHERE CM.id_post = OLD.id_post;
+
+	UPDATE Post
+		SET num_commenti = num_cm
+		WHERE P.id_post = OLD.id_post;
+
+END;
+$diminuisciNumCommenti$;
+
+
+
+TRIGGER:
+CREATE TRIGGER diminuisciNumCommenti
+AFTER DELETE ON Mi_piace
+FOR EACH ROW EXECUTE diminuisciNumCommenti();
+
+
+
+
+[Per far si che num_mi_piace e num_commenti rimangano consistenti, ovvero che nessuno possa
+modificare questi numeri senza che siano valori validi, aggiungo anche un trigger sull'update]
+1.3)TRIGGER:
+CREATE TRIGGER controlloNumMiPiace
+BEFORE UPDATE ON Post
+FOR EACH ROW
+WHEN ( OLD.num_mi_piace <> NEW.num_mi_piace )
+EXECUTE aumentaNumMiPiace();
+
+2.3)TRIGGER:
+CREATE TRIGGER controlloNumCommenti
+BEFORE UPDATE ON Post
+FOR EACH ROW 
+WHEN ( OLD.num_commenti <> NEW.num_commenti )
+EXECUTE aumentaNumCommento();
+
+
+
+-------------------------------------------------------------------------------------------------------------------------
+14) un utente puo' far parte di un gruppo una sola volta.
+
+ALTER TABLE Partecipanti_al_gruppo
+	ADD CONSTRAINT UNIQUE(email_membro, tag_gruppo)
+
+
+
+4)quando viene creato un gruppo, automaticamente viene aggiunto il creatore nella lista dei partecipanti.
+
+FUNZIONE:
+CREATE OR REPLACE FUNCTION primoPartecipante()
+RETURNS TRIGGER
+language plpgsql
+AS $primoPartecipante$
+BEGIN
+
+	INSERT INTO Partecipanti_al_gruppo 
+		VALUES(NEW.email_creatore, NEW.tag);
+
+END;	
+$primoPartecipante$;
+
+
+TRIGGER:
+CREATE TRIGGER primoPartecipante
+AFTER INSERT ON Gruppo
+FOR EACH ROW EXECUTE primoPartecipante();
+
+
+-------------------------------------------------------------------------------------------------------------------------
+5)Alla creazione di una nuova richiesta, l'attributo accettata è NULL (la richiesta non è stata
+ancora presa in considerazione).
+
+FUNZIONE:
+CREATE OR REPLACE FUNCTION nuovaRichiesta()
+RETURNS TRIGGER
+language plpgsql
+AS $nuovaRichiesta$
+BEGIN
+
+	NEW.accettata = NULL;
+
+END;
+$nuovaRichiesta$;
+
+
+
+TRIGGER:
+CREATE TRIGGER nuovaRichiesta
+BEFORE INSERT ON Richieste
+FOR EACH ROW EXECUTE nuovaRichiesta();
+
+
+[FORSE QUESTO TRIGGER PUò ESSERE RIASSUNTO NEL 16), AGGIUNGO QUESTA
+RIGA SUBITO DOPO IL BEGIN]
+
+
+-------------------------------------------------------------------------------------------------------------------------
+
+
+6)quando in Richiesta viene fatto un UPDATE  di accettata (da NULL/0 a 1), viene aggiunta la riga in Partecipanti_al_gruppo
+
+FUNZIONE:
+CREATE OR REPLACE FUNCTION accettaNuovoMembro()
+RETURNS TRIGGER
+language plpgsql
+AS $accettaNuovoMembro$
+BEGIN
+
+	INSERT INTO Partecipanti_al_gruppo
+		VALUES (NEW.email_utente, NEW.tag_gruppo);
+
+END;
+$accettaNuovoMembro$;
+
+
+
+TRIGGER:
+CREATE TRIGGER accettaNuovoMembro
+AFTER UPDATE ON Richiesta
+FOR EACH ROW
+WHEN ( OLD.accettata = NULL AND NEW.accettata = 1 )
+EXECUTE accettaNuovoMembro();
+
+
+-------------------------------------------------------------------------------------------------------------------------
+
+16)Se esiste già una richiesta (di un dato utente per un dato gruppo) ancora non considerata, allora non si può aggiungere una nuova richiesta.
+
+FUNZIONE:
+CREATE OR REPLACE FUNCTION richiestaGruppoValida()
+RETURNS TRIGGER
+language plpgsql
+AS $richiestaGruppoValida$
+DECLARE
+	e_richiesta_non_valida EXCEPTION;
+	PRAGMA EXCEPTION_INIT( e_data_non_valida, -20002 );
+
+	richieste_in_corso INT;
+BEGIN
+
+	SELECT COUNT(*) INTO richieste_in_corso
+		FROM Richieste AS R
+		WHERE R.email_utente = NEW.email_utente 
+				AND R.tag_gruppo = NEW.tag_gruppo
+				AND R.accettata = NULL;
+
+	IF ( richieste_in_corso > 0 ) THEN
+		RAISE e_richiesta_non_valida;
+	ENDIF;
+
+EXCEPTION
+	WHEN e_richiesta_non_valida THEN
+		DBMS_OUTPUT.putline('Richiesta inserita non valida: esiste gia' una richiesta ancora da considerare.');
+		ROLLBACK??
+
+END;
+$richiestaGruppoValida$;
+
+
+
+TRIGGER:
+CREATE TRIGGER richiestaGruppoValida
+BEFORE INSERT ON Richiesta
+FOR EACH ROW
+EXECUTE richiestaGruppoValida();
+
+
+-------------------------------------------------------------------------------------------------------------------------
+
+
+17) Se un utente fa già parte di un gruppo, allora non può fare una nuova richiesta per quel gruppo.
+
+FUNZIONE:
+CREATE OR REPLACE FUNCTION utenteInGruppoValida()
+RETURNS TRIGGER
+language plpgsql
+AS $utenteInGruppoValida$
+DECLARE
+	e_richiesta_non_valida2 EXCEPTION;
+	PRAGMA EXCEPTION_INIT( e_data_non_valida2, -20003 );
+
+	utente_in_gruppo INT;
+BEGIN
+
+	SELECT COUNT(*) INTO utente_in_gruppo
+		FROM Partecipanti_al_gruppo AS P
+		WHERE P.email_membro = NEW.email_utente 
+				AND P.tag_gruppo = NEW.tag_gruppo;
+
+	IF ( utente_in_gruppo > 0 ) THEN
+		RAISE e_richiesta_non_valida2;
+	ENDIF;
+
+EXCEPTION
+	WHEN e_richiesta_non_valida THEN
+		DBMS_OUTPUT.putline('Richiesta inserita non valida: l'utente fa gia' parte del gruppo.');
+		ROLLBACK??
+
+END;
+$utenteInGruppoValida$;
+
+
+
+TRIGGER:
+CREATE TRIGGER utenteInGruppoValida
+BEFORE INSERT ON Richiesta
+FOR EACH ROW
+EXECUTE utenteInGruppoValida();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

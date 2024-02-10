@@ -3,8 +3,9 @@ Notazione sui vincoli
 1)Vincolo di Post : Se un post è di tipo : Post_Semplice l'attributo File di post è NULL.
 2)Vincolo di Post : Se l'attributo File di Post non è NULL implica che Post è di tipo : Post_Con_Media.
 3)data e ora del commento del post non può essere antecedente alla data e ora della pubblicazione del post.
+3.2)data e ora del like al post non può essere antecedente alla data e ora della pubblicazione del post.
 4)leggittimita dell'email verificare che abbia la @.
-5)(Gia vinvolato dal not null nella tabella utente)vincolo di username senza caratteri.
+5)(Gia vincolato dal not null nella tabella utente)vincolo di username senza caratteri.
 6)VIncolo verifica password con carattere maiuscolo,numeri, caratteri speciali e che abbia almeno 8 caratteri.
 7)Vincolo sul tipo del file(es:.png,.jpg) dell'immagine del profilo di un utente.
 8)Vincolo su tabella amicizia in cui un utente può essere amico ad un altro utente una sola volta.
@@ -12,3 +13,8 @@ Notazione sui vincoli
 10)Vincolo sul tipo del file del post con Media es(può essere di tipo .mp4,.gif ecc)ma non di tipo .exe.
 11)Vincolo sulle parolacce sui didascalia dei post,commenti,nomi dei gruppi,username.
 12)data e ora della notifica del post non può essere antecedente alla data e ora della pubblicazione del post.
+13)una notifica deve raggiungere un utente una sola volta.
+14) un utente puo' far parte di un gruppo una sola volta.
+15)un tente può mettere like a un post una sola volta.
+16)Se esiste già una richiesta (di un dato utente per un dato gruppo) ancora non considerata, allora non si può aggiungere una nuova richiesta.
+17) Se un utente fa già parte di un gruppo, allora non può fare una nuova richiesta per quel gruppo.
