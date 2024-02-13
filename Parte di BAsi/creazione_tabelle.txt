@@ -56,6 +56,8 @@ create table Post(
 	constraint fk_email_creatore_post foreign key (email_creatore_post) references utente(email)
 );
 --------------------------------------------------------------------------------------------------------
+CREATE TYPE tipo_post AS ENUM ('post_semplice','post_con_media');
+------------------------------------------------------------------------------------------------
 
 create table Notifica(
 	id_notifica SERIAL primary key ,

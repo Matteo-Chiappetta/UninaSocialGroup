@@ -149,9 +149,13 @@ ADD CONSTRAINT check_email_valida
 
 ALTER TABLE Utente
 ADD CONSTRAINT check_password_valida 
-		CHECK (password ~'^[0-9]{1,}$' AND password ~*'^[A-Z]{1,}$' 
-				AND password ~*'^[a-z]{1,}$'  AND password ~*'^[!?@#%&$]{1,}$'
-				AND LENGHT(password) >= 8 ) ;
+CHECK (
+    password ~ '[0-9]' AND
+    password ~ '[A-Z]' AND
+    password ~ '[a-z]' AND
+    password ~ '[!?@#%&$]' AND
+    LENGTH(password) >= 8
+);
 
 -------------------------------------------------------------------------------------------------------------------------
 
@@ -410,7 +414,7 @@ EXECUTE aumentaNumCommento();
 14) un utente puo' far parte di un gruppo una sola volta.
 
 ALTER TABLE Partecipanti_al_gruppo
-	ADD CONSTRAINT UNIQUE(email_membro, tag_gruppo)
+	ADD CONSTRAINT partecipa_una_volta UNIQUE(email_membro, tag_gruppo); MESSO
 
 
 
@@ -425,6 +429,7 @@ BEGIN
 
 	INSERT INTO Partecipanti_al_gruppo 
 		VALUES(NEW.email_creatore, NEW.tag);
+return new;
 
 END;	
 $primoPartecipante$;
@@ -433,7 +438,7 @@ $primoPartecipante$;
 TRIGGER:
 CREATE TRIGGER primoPartecipante
 AFTER INSERT ON Gruppo
-FOR EACH ROW EXECUTE primoPartecipante();
+FOR EACH ROW EXECUTE FUNCTION primoPartecipante();
 
 
 -------------------------------------------------------------------------------------------------------------------------
@@ -475,10 +480,12 @@ RETURNS TRIGGER
 language plpgsql
 AS $accettaNuovoMembro$
 BEGIN
-
-	INSERT INTO Partecipanti_al_gruppo
-		VALUES (NEW.email_utente, NEW.tag_gruppo);
-
+	IF OLD.accettato = NULL AND NEW.accettato = true THEN
+		INSERT INTO Partecipanti_al_gruppo
+			VALUES (NEW.email_utente, NEW.tag_gruppo);
+	ENDIF;
+	
+return new;
 END;
 $accettaNuovoMembro$;
 
@@ -488,8 +495,22 @@ TRIGGER:
 CREATE TRIGGER accettaNuovoMembro
 AFTER UPDATE ON Richiesta
 FOR EACH ROW
-WHEN ( OLD.accettata = NULL AND NEW.accettata = 1 )
-EXECUTE accettaNuovoMembro();
+EXECUTE FUNCTION accettaNuovoMembro();
+---------------------versione chatgpt--------------------------------
+CREATE OR REPLACE FUNCTION accettaNuovoMembro()
+RETURNS TRIGGER
+LANGUAGE plpgsql
+AS $accettaNuovoMembro$
+BEGIN
+    IF OLD.accettato IS NULL AND NEW.accettato = true THEN
+        INSERT INTO Partecipanti_al_gruppo (email_membro, tag_gruppo)
+        VALUES (NEW.email_utente, NEW.tag_gruppo);
+    END IF;
+    
+    RETURN NEW;
+END;
+$accettaNuovoMembro$;
+
 
 
 -------------------------------------------------------------------------------------------------------------------------
@@ -525,6 +546,32 @@ EXCEPTION
 
 END;
 $richiestaGruppoValida$;
+---------------------------VERSIONE CHATGPT_________________
+CREATE OR REPLACE FUNCTION richiestaGruppoValida()
+RETURNS TRIGGER
+LANGUAGE plpgsql
+AS $richiestaGruppoValida$
+DECLARE
+    richieste_in_corso INT;
+BEGIN
+    SELECT COUNT(*) INTO richieste_in_corso
+    FROM Richiesta AS R
+    WHERE R.email_utente = NEW.email_utente 
+        AND R.tag_gruppo = NEW.tag_gruppo
+        AND R.accettato IS NULL;
+
+    IF richieste_in_corso > 0 THEN
+        RAISE EXCEPTION 'Richiesta inserita non valida: esiste già una richiesta ancora da considerare.';
+    END IF;
+
+    RETURN NEW;
+END;
+$richiestaGruppoValida$;
+
+
+
+
+
 
 
 

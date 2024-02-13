@@ -2,7 +2,7 @@ TRIGGER X PROGETTO
 
 Trigger:
 1)Vincolo di Post : Se un post è di tipo : Post_Semplice l'attributo File di post è NULL.
-2) Vincolo di POst : Se l'attributo File di Post non è NULL implica che Post è di tipo : Post_Con_Media.
+2)Vincolo di POst : Se l'attributo File di Post non è NULL implica che Post è di tipo : Post_Con_Media.
 
 CREATE TRIGGER filePresenteInPost 
 BEFORE INSERT ON Post
@@ -53,6 +53,7 @@ DECLARE
 	current_time TIME;
 	
 BEGIN
+				 [ATTENZIONE, PER POST, COMMENTO, ECC PENSO CHE DOVREMMO CAMBIARE I TIPI DATA E ORA A UN UNICO TIPO TIMESTAMP, poichè non abbiamo bisogno del millisecondo.]
 
 SELECT SYSDATE
   INTO current_date
@@ -85,6 +86,7 @@ ADD CONSTRAINT check_password_valida
 12)data e ora della notifica del post non può essere antecedente alla data e ora della pubblicazione del post.
 [PRIMA FACCIO IN MODO CHE OGNI VOLTA CHE CREO UN POST, LA NOTIFICA VENGA CREATA AUTOMATICAMENTE]
 [CREO ANCHE IL VINCOLO, IN CASO QUALCUNO PROVASSE A INSERIRE UNA NOTIFICA SBAGLIATA MANUALMENTE]
+(devo fare le stesse cose anche per raggiunge)
 
 ALTER TABLE Notifica
 ADD CONSTRAINT  notifica_per_post UNIQUE (id_notifica, id_post_pubblicato)
@@ -133,7 +135,7 @@ SELECT P.id_post, P.data, P.ora INTO post, data_post, ora_post
 	WHERE NEW.id_post_pubblicato = P.id_post;
 
 IF( post = NULL ) THEN
-	RAISE_APPLICATION_ERROR(-20002, 'Non esiste post per questa notifica.');    //NON SERVE PERCHè è GIA VINCOLO DI FK!!!!!!
+	RAISE_APPLICATION_ERROR(-20002, 'Non esiste post per questa notifica.');
 ENDIF;
 
 IF(data_post > NEW.data_notifica || ora_post > NEW.ora_notifica ) THEN
@@ -145,7 +147,7 @@ SELECT COUNT(N.id_post_pubblicato) INTO num
 	WHERE NEW.id_post_pubblicato = N.id_post_publicato;
 
 IF( num >= 1 ) THEN
-	RAISE_APPLICATION_ERROR(-20002, 'Già esiste una notifica per questo post.');     //POSSO FARE UN ALTER TABLE ADD CONSTRAINT UNIQUE
+	RAISE_APPLICATION_ERROR(-20002, 'Già esiste una notifica per questo post.');
 ENDIF;
 
 END;
@@ -292,7 +294,6 @@ END;
 
 3)Non pubblicare post se contiene una parola censurata.
 [Immaginiamo di avere una stringa che possiamo passare come input con tutte parole da censurare separate da una virgola.]
-[inserire controllo sulla lunghezza della stringa di input non nulla.]
 
 
 
@@ -321,6 +322,3 @@ INSERT INTO Partecipanti_al_gruppo
 	VALUES(NEW.email_creatore, NEW.tag);
 
 END;	
-
-
-4)quando in Richiesta viene fatto un UPDATE  di accettata (da NULL/0 a 1), viene aggiunta la riga in Partecipanti_al_gruppo
