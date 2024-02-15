@@ -245,6 +245,7 @@ LOOP
 	FETCH recupera_utenti INTO email;
 	INSERT INTO Raggiunge VALUES
 		(email, NEW.id_notifica);
+	EXIT WHEN recupera_utenti%NOT_FOUND
 ENDLOOP;
 
 CLOSE recupera_utenti;
@@ -626,19 +627,162 @@ EXECUTE utenteInGruppoValida();
 
 
 
+-------------------------------------------------------------------------------------------------------------------------
+
+
+7)Il post può essere pubblicato in un gruppo solo se l'utente che lo ha pubblicato vi appartiene
+
+
+
+FUNZIONE:
+CREATE OR REPLACE FUNCTION postGruppoValido()
+RETURNS TRIGGER
+language plpgsql
+AS $postGruppoValido$
+DECLARE
+
+	CURSOR IS recupera_partecipazioni
+	SELECT P.tag_gruppo
+		FROM Partecipanti_al_gruppo AS P
+		WHERE P.email_membro = NEW.email_creatore_post;
+
+	valid INTEGER;
+	gruppo Post.tag_gruppo%TYPE;
+
+BEGIN
+	valid := 0;
+	OPEN recupera_partecipazioni;
+	
+	LOOP
+	FETCH recupera_partecipazioni INTO gruppo
+	IF ( gruppo = NEW.tag_gruppo ) THEN
+		valid := 1;
+	END IF;
+
+	EXIT WHEN valid = 1 OR recupera_partecipazioni%NOT_FOUND; 
+	END LOOP;
+
+	IF ( valid <> 1) THEN
+		RAISE EXCEPTION ('L utente non può pubblicare in questo gruppo');
+	
+END;
+$postGruppoValido$;
 
 
 
 
+TRIGGER:
+CREATE TRIGGER postGruppoValido
+BEFORE INSERT ON Post
+FOR EACH ROW
+EXECUTE postGruppoValido();
+
+
+
+-------------------------------------------------------------------------------------------------------------------------
+
+8)verifica che percorso_file termini con .jpg o .png
+
+ALTER TABLE Post									[POTREBBE FUNZIONARE?]
+ADD CONSTRAINT check_file_valido 
+		CHECK percorso_file ~'^[a-zA-Z0-9._%+-]+.png$') ;
+
+////////////////////////////////////////////////////////////
+
+FUNZIONE:
+CREATE OR REPLACE FUNCTION fileValido()
+RETURNS TRIGGER
+language plpgsql
+AS $fileValido$
+DECLARE
+
+	valid INTEGER;
+	lunghezza INTEGER;
+	finale Post.percorso_file%TYPE
+
+BEGIN
+	valid := 0;
+	lunghezza := LENGHT(NEW.percorso_file);
+	finale = SUBSTR(NEW.percorso_file, lunghezza-4 , lunghezza);
+
+	IF (finale = '.png' OR finale = '.jpg' )
+		valid := 1;
+	END IF;
+
+	IF ( valid <> 1)
+		RAISE EXCEPTION ('il file deve essere png o jpg');
+	END IF;
+
+END;
+$fileValido$;
+
+
+TRIGGER:
+CREATE TRIGGER fileValido
+BEFORE INSERT ON Post
+FOR EACH ROW
+EXECUTE fileValido();
 
 
 
 
+-------------------------------------------------------------------------------------------------------------------------
+
+[DIDASCALIA DI POST DEVE ESSRE MESSO A NOT NULL]
+
+CREATE OR REPLACE FUNCTION paroleOscene()
+RETURNS VARCHAR
+language plpgsql
+AS $paroleOscene$
+DECLARE
+	parole := ' Sanremo + Rai + Fiorello '
+
+	RETURN parole;
+END;
+$paroleOscene$
 
 
 
 
+FUNZIONE:
+CREATE OR REPLACE FUNCTION controlloOscenita()
+RETURNS TRIGGER
+language plpgsql
+AS $controlloOscenita$
+DECLARE
+
+	pos INTEGER := 0;
+	pos_prec INTEGER := 0;
+	parole VARCHAR;
+	parola_in VARCHAR;
+	trovata BOOLEAN := FALSE;
+
+BEGIN
+	parole := paroleOscene();
+	LOOP
+		pos := INSTR(lista_test, '@', pos_prec); 				//pos_prec è l'offset
+		parola_in := SUBSTR(parole, pos_prec+1, pos-1);
+	
+		IF ( INSTR(NEW.didascalia, parola_in) > 0) THEN
+			trovata := 1;
+		END IF;
+
+	EXIT WHEN pos = 0 OR trovata = TRUE;
+	END LOOP;
+
+	IF ( trovata = 1 ) THEN
+		RAISE EXCEPTION ('Il post non può essere pubblicato perchè contiene parole oscene.');
+	END IF;
+
+END;
+$controlloOscenita$	
 
 
 
+
+TRIGGER:
+CREATE TRIGGER controlloOscenita
+BEFORE INSERT ON Post
+FOR EACH ROW
+EXECUTE FUNCTION controlloOscenita();
 
