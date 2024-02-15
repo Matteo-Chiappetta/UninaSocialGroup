@@ -164,7 +164,25 @@ CHECK (
 ALTER TABLE Notifica
 ADD CONSTRAINT  notifica_per_post UNIQUE (id_notifica, id_post_pubblicato); 						//(C'E' GIA??)
 
+---------------------------------------------------------------------------------------------------------------------------
+FUNZIONE:
+CREATE OR REPLACE FUNCTION NuovaNotifica()
+RETURNS TRIGGER
+language plpgsql
+AS $NuovaNotifica$
+DECLARE
+BEGIN
+	insert into notifica(id_post_pubblicato) values (NEW.id_post);
+RETURN NEW;
+END;
+$NuovaNotifica$;
 
+
+TRIGGER:
+CREATE TRIGGER NuovaNotifica
+AFTER INSERT ON post
+FOR EACH ROW EXECUTE FUNCTION NuovaNotifica();
+---------------------------------------------------------------------------------------------------------------------------
 
 12.2)data e ora della notifica del post non può essere antecedente alla data e ora della pubblicazione del post.
 
@@ -225,31 +243,28 @@ partecipanti del gruppo in cui è stato pubblicato il post.
 FUNZIONE:
 CREATE OR REPLACE FUNCTION notificaRaggiungeUtenti()
 RETURNS TRIGGER
-language plpgsql
+LANGUAGE plpgsql
 AS $notificaRaggiungeUtenti$
 DECLARE 
+    recupera_utenti CURSOR FOR
+        SELECT PG.email_membro
+        FROM Post P
+        JOIN Gruppo G ON P.tag_gruppo = G.tag
+        JOIN Partecipanti_al_gruppo PG ON G.tag = PG.tag_gruppo
+        WHERE P.id_post = NEW.id_post_pubblicato;
 
-	CURSOR recupera_utenti IS
-		SELECT PG.email_membro
-		FROM (Post P JOIN Gruppo G ON P.tag_gruppo = G.tag ) 
-								JOIN Partecipanti_al_gruppo PG ON G.tag = PG.tag_gruppo
-		WHERE P.id_post = NEW.id_post_pubblicato;
-		
-	email Utente.email%TYPE;
-
+    email Utente.email%TYPE;
 BEGIN
+    OPEN recupera_utenti;
 
-OPEN recupera_utenti;
+    LOOP
+        FETCH recupera_utenti INTO email;
+        EXIT WHEN NOT FOUND; -- Corretto NOT FOUND
+        INSERT INTO Raggiunge VALUES (email, NEW.id_notifica);
+    END LOOP;
 
-LOOP
-	FETCH recupera_utenti INTO email;
-	INSERT INTO Raggiunge VALUES
-		(email, NEW.id_notifica);
-	EXIT WHEN recupera_utenti%NOT_FOUND
-ENDLOOP;
-
-CLOSE recupera_utenti;
-
+    CLOSE recupera_utenti;
+RETURN NEW;
 END;
 $notificaRaggiungeUtenti$;
  
@@ -518,35 +533,7 @@ $accettaNuovoMembro$;
 
 16)Se esiste già una richiesta (di un dato utente per un dato gruppo) ancora non considerata, allora non si può aggiungere una nuova richiesta.
 
-FUNZIONE:
-CREATE OR REPLACE FUNCTION richiestaGruppoValida()
-RETURNS TRIGGER
-language plpgsql
-AS $richiestaGruppoValida$
-DECLARE
-	e_richiesta_non_valida EXCEPTION;
-	PRAGMA EXCEPTION_INIT( e_data_non_valida, -20002 );
 
-	richieste_in_corso INT;
-BEGIN
-
-	SELECT COUNT(*) INTO richieste_in_corso
-		FROM Richieste AS R
-		WHERE R.email_utente = NEW.email_utente 
-				AND R.tag_gruppo = NEW.tag_gruppo
-				AND R.accettata = NULL;
-
-	IF ( richieste_in_corso > 0 ) THEN
-		RAISE e_richiesta_non_valida;
-	ENDIF;
-
-EXCEPTION
-	WHEN e_richiesta_non_valida THEN
-		DBMS_OUTPUT.putline('Richiesta inserita non valida: esiste gia' una richiesta ancora da considerare.');
-		ROLLBACK??
-
-END;
-$richiestaGruppoValida$;
 ---------------------------VERSIONE CHATGPT_________________
 CREATE OR REPLACE FUNCTION richiestaGruppoValida()
 RETURNS TRIGGER
@@ -594,9 +581,6 @@ RETURNS TRIGGER
 language plpgsql
 AS $utenteInGruppoValida$
 DECLARE
-	e_richiesta_non_valida2 EXCEPTION;
-	PRAGMA EXCEPTION_INIT( e_data_non_valida2, -20003 );
-
 	utente_in_gruppo INT;
 BEGIN
 
@@ -606,16 +590,12 @@ BEGIN
 				AND P.tag_gruppo = NEW.tag_gruppo;
 
 	IF ( utente_in_gruppo > 0 ) THEN
-		RAISE e_richiesta_non_valida2;
-	ENDIF;
-
-EXCEPTION
-	WHEN e_richiesta_non_valida THEN
-		DBMS_OUTPUT.putline('Richiesta inserita non valida: l'utente fa gia' parte del gruppo.');
-		ROLLBACK??
-
+		RAISE EXCEPTION 'Richiesta inserita non valida: l utente fa gia parte del gruppo';
+	END IF;
+	RETURN NEW;
 END;
 $utenteInGruppoValida$;
+
 
 
 
@@ -623,7 +603,7 @@ TRIGGER:
 CREATE TRIGGER utenteInGruppoValida
 BEFORE INSERT ON Richiesta
 FOR EACH ROW
-EXECUTE utenteInGruppoValida();
+EXECUTE FUNCTION utenteInGruppoValida();
 
 
 
@@ -637,34 +617,36 @@ EXECUTE utenteInGruppoValida();
 FUNZIONE:
 CREATE OR REPLACE FUNCTION postGruppoValido()
 RETURNS TRIGGER
-language plpgsql
+LANGUAGE plpgsql
 AS $postGruppoValido$
 DECLARE
-
-	CURSOR IS recupera_partecipazioni
-	SELECT P.tag_gruppo
-		FROM Partecipanti_al_gruppo AS P
-		WHERE P.email_membro = NEW.email_creatore_post;
-
-	valid INTEGER;
-	gruppo Post.tag_gruppo%TYPE;
-
+    recupera_partecipazioni CURSOR FOR
+        SELECT P.tag_gruppo
+        FROM Partecipanti_al_gruppo AS P
+        WHERE P.email_membro = NEW.email_creatore_post;
+        
+    gruppo Partecipanti_al_gruppo.tag_gruppo%TYPE;
+    valid INTEGER;
 BEGIN
-	valid := 0;
-	OPEN recupera_partecipazioni;
-	
-	LOOP
-	FETCH recupera_partecipazioni INTO gruppo
-	IF ( gruppo = NEW.tag_gruppo ) THEN
-		valid := 1;
-	END IF;
+    valid := 0;
+    OPEN recupera_partecipazioni;
+    
+    LOOP
+        FETCH recupera_partecipazioni INTO gruppo;
+        EXIT WHEN valid = 1 OR NOT FOUND; 
+        
+        IF (gruppo = NEW.tag_gruppo) THEN
+            valid := 1;
+        END IF;
+    END LOOP;
+    
+    CLOSE recupera_partecipazioni; 
 
-	EXIT WHEN valid = 1 OR recupera_partecipazioni%NOT_FOUND; 
-	END LOOP;
-
-	IF ( valid <> 1) THEN
-		RAISE EXCEPTION ('L utente non può pubblicare in questo gruppo');
-	
+    IF (valid <> 1) THEN
+        RAISE EXCEPTION 'L''utente non può pubblicare in questo gruppo';
+    END IF;
+    
+    RETURN NEW;
 END;
 $postGruppoValido$;
 
@@ -675,7 +657,7 @@ TRIGGER:
 CREATE TRIGGER postGruppoValido
 BEFORE INSERT ON Post
 FOR EACH ROW
-EXECUTE postGruppoValido();
+EXECUTE FUNCTION postGruppoValido();
 
 
 
@@ -692,36 +674,85 @@ ADD CONSTRAINT check_file_valido
 FUNZIONE:
 CREATE OR REPLACE FUNCTION fileValido()
 RETURNS TRIGGER
-language plpgsql
+LANGUAGE plpgsql
 AS $fileValido$
 DECLARE
-
-	valid INTEGER;
-	lunghezza INTEGER;
-	finale Post.percorso_file%TYPE
-
+    valid INTEGER;
+    lunghezza INTEGER;
+    finale TEXT;
 BEGIN
-	valid := 0;
-	lunghezza := LENGHT(NEW.percorso_file);
-	finale = SUBSTR(NEW.percorso_file, lunghezza-4 , lunghezza);
+	IF (NEW.percorso_file IS NULL) THEN
+        RETURN NEW;
+    END IF;
+    valid := 0;
+    lunghezza := LENGTH(NEW.percorso_file); 
+    finale := SUBSTR(NEW.percorso_file, lunghezza-3, lunghezza);
 
-	IF (finale = '.png' OR finale = '.jpg' )
-		valid := 1;
-	END IF;
+    IF (finale = '.png' OR finale = '.jpg') THEN 
+        valid := 1; 
+    END IF;
 
-	IF ( valid <> 1)
-		RAISE EXCEPTION ('il file deve essere png o jpg');
-	END IF;
+    IF (valid <> 1) THEN 
+        RAISE EXCEPTION 'il file deve essere png o jpg'; 
+    END IF;
 
+    RETURN NEW;
 END;
 $fileValido$;
-
 
 TRIGGER:
 CREATE TRIGGER fileValido
 BEFORE INSERT ON Post
 FOR EACH ROW
 EXECUTE fileValido();
+
+------------------------------------------------------------------------------------------------------
+verifica che img_profilo termini con .jpg o .png 
+
+CREATE OR REPLACE FUNCTION ImgProfiloValido()
+RETURNS TRIGGER
+LANGUAGE plpgsql
+AS $ImgProfiloValido$
+DECLARE
+    valid INTEGER;
+    lunghezza INTEGER;
+    finale TEXT;
+BEGIN
+    IF (NEW.img_profilo IS NULL) THEN
+        RETURN NEW;
+    END IF;
+
+    valid := 0;
+    lunghezza := LENGTH(NEW.img_profilo); 
+    finale := SUBSTR(NEW.img_profilo, lunghezza-3, lunghezza);
+
+    IF (finale = '.png' OR finale = '.jpg') THEN 
+        valid := 1; 
+    END IF;
+
+    IF (valid <> 1) THEN 
+        RAISE EXCEPTION 'il file per l immagine del profilo deve essere png o jpg'; 
+    END IF;
+
+    RETURN NEW;
+END;
+$ImgProfiloValido$;
+
+
+
+
+
+
+TRIGGER:
+CREATE TRIGGER ImgProfiloValido
+BEFORE INSERT ON utente
+FOR EACH ROW
+EXECUTE FUNCTION ImgProfiloValido();
+
+
+
+
+
 
 
 

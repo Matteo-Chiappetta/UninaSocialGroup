@@ -47,7 +47,7 @@ create table Post(
 	id_post SERIAL PRIMARY KEY,		--CONTROLLA SINTASSI.
 	data date,
 	ora time,
-	didascalia varchar(300),
+	didascalia varchar(300) NOT NULL ,
 	percorso_file varchar(100),
 	tipo_file varchar(20) not null check(tipo_file IN ('post_semplice','post_con_media')),
 	email_creatore_post varchar(60),

@@ -5,4 +5,7 @@ INSERT TABELLA GRUPPO
 insert into gruppo (tag,tema,email_creatore) values ('ANime','ANimeUnina','sab@email.it');
 -----------------------------------------------------------------------------------------------
 INSERT POST
-insert into Post (data,didascalia,email_creatore_post,tag_gruppo) values ('2024-02-06','prova trigger post','sab@email.it','ANime');
+insert into Post (didascalia,email_creatore_post,tag_gruppo,percorso_file) values ('prova trigger post','sab@email.it','ANime','ciao.jpg');
+-----------------------------------------------------------------
+UPDATE RICHIESTA
+update richiesta set accettato = true where email_utente = 'vitale3@email.it' and tag_gruppo = 'ANime';
