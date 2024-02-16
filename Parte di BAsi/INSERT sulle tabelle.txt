@@ -1,11 +1,38 @@
 INSERT TABELLA UTENTE
-insert into Utente (username,email,password,descrizione) values ('sab','sab@email.it','ciaociao','prova2');
+insert into Utente (username,email,password,descrizione) values ('Sabrina','Sabrina@email.it','Sab2004!','Ciao a tutti');
+
+insert into Utente (username,email,password,descrizione,img_profilo) values ('Matteo','Matteo@email.it','Matt2002!','Ciao a tutti','foto.jpg');
+
+insert into Utente (username,email,password,descrizione,img_profilo) values ('Francesco','Vitale@email.it','Viki2002!','Ciao a tutti','fotina.jpg');
+
+insert into Utente (username,email,password,descrizione) values ('Alessandro','Ale@email.it','Aleandro2002!','Ciao a tutti sono Ale');
+
+insert into Utente (username,email,password,descrizione) values ('Benedetta','benny@email.it','Benny2002!','Ciao a tutti sono Benedetta');
 ---------------------------------------------------------------------------------------------
 INSERT TABELLA GRUPPO 
-insert into gruppo (tag,tema,email_creatore) values ('ANime','ANimeUnina','sab@email.it');
+insert into gruppo (tag,tema,email_creatore) values ('Anime','AnimeUnina','Sabrina@email.it');
+
+insert into gruppo (tag,tema,email_creatore) values ('VideoGame','VideoGameUnina','Matteo@email.it');
+
+insert into gruppo (tag,tema,email_creatore) values ('WebTecnology','VideoGameUnina','Vitale@email.it');
 -----------------------------------------------------------------------------------------------
 INSERT POST
-insert into Post (didascalia,email_creatore_post,tag_gruppo,percorso_file) values ('prova trigger post','sab@email.it','ANime','ciao.jpg');
+insert into Post (didascalia,email_creatore_post,tag_gruppo,percorso_file) values ('prova trigger post','sab@email.it','Anime','ciao.jpg');
 -----------------------------------------------------------------
-UPDATE RICHIESTA
-update richiesta set accettato = true where email_utente = 'vitale3@email.it' and tag_gruppo = 'ANime';
+INSERT TABELLA RICHIESTA
+insert into richiesta (email_utente,tag_gruppo) values ('Vitale@email.it','Anime');
+------------------------------------------------------------------------------------
+UPDATE RICHIESTA COSI VA FATTO
+update richiesta
+    set accettato = true
+    where email_utente = 'EMAIL_RICHIEDENTE' AND tag_gruppo = 'GRUPPO_SU_CUI_SI_FA_RICHIESTA' 
+	AND data_ora_richiesta = (select MAX(data_ora_richiesta) 
+								from richiesta where 
+    							email_utente = 'EMAIL_RICHIEDENTE' AND tag_gruppo = 'GRUPPO_SU_CUI_SI_FA_RICHIESTA'
+         						);
+
+
+---------------------------------
+insert su AMICIZIA
+insert into amicizia(email_utente_1,email_utente_2) values ('','')
+-----------------------------------------

@@ -44,9 +44,8 @@ create table Partecipanti_al_gruppo(
 );
 ----------------------------------------------------------------------------------------
 create table Post(
-	id_post SERIAL PRIMARY KEY,		--CONTROLLA SINTASSI.
-	data date,
-	ora time,
+	id_post SERIAL PRIMARY KEY,		
+	data_ora_post timestamp default current_timestamp,
 	didascalia varchar(300) NOT NULL ,
 	percorso_file varchar(100),
 	tipo_file varchar(20) not null check(tipo_file IN ('post_semplice','post_con_media')),
@@ -61,8 +60,7 @@ CREATE TYPE tipo_post AS ENUM ('post_semplice','post_con_media');
 
 create table Notifica(
 	id_notifica SERIAL primary key ,
-	data_notifica date,
-	ora_notifica time,
+	data_ora_notifica timestamp default current_timestamp,
 	id_post_pubblicato integer,
 	constraint fk_post foreign key (id_post_pubblicato) references post(id_post)
 );
@@ -80,21 +78,20 @@ create table Raggiunge(
 ----------------------------------------------------------------------------------
 
 create table Commento(
-	data_commento date not null,
-	ora_commento time not null,
+	id_commento SERIAL primary key,
+	data_ora_commento timestamp default current_timestamp ,
 	commento varchar(300)not null,
 	email_utente varchar(60),
 	id_post integer,
 	constraint fk_email foreign key (email_utente) references Utente(email),
-	constraint fk_post foreign key (id_post) references post(id_post),
-	Primary key (id_post,email_utente,data_commento,ora_commento)
+	constraint fk_post foreign key (id_post) references post(id_post)
 );
 
 --------------------------------------------------------------------------------------------
 
 create table Mi_piace(
-	data_commento date not null,
-	ora_commento time not null,
+	id_mi_piace SERIAL primary key,
+	data_ora_mi_piace timestamp default current_timestamp,
 	email_utente varchar(60),
 	id_post integer,
 	constraint fk_email foreign key (email_utente) references Utente(email),
@@ -105,8 +102,7 @@ create table Mi_piace(
 -----------------------------------------------------------------------------------
 create table richiesta(
 	accettato BOOLEAN,
-	data_richiesta date,
-	ora_richiesta time,
+	data_ora_richiesta timestamp default current_timestamp,
 	email_utente varchar(60),
 	tag_gruppo varchar(20),
 	constraint fk_tag foreign key(tag_gruppo) references Gruppo (tag),

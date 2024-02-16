@@ -1,0 +1,29 @@
+1)check validita email
+ALTER TABLE Utente
+ADD CONSTRAINT check_email_valida 
+		CHECK (email ~'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
+---------------------------------------------------------------------------
+2)check password
+ALTER TABLE Utente
+ADD CONSTRAINT check_password_valida 
+CHECK (
+    password ~ '[0-9]' AND
+    password ~ '[A-Z]' AND
+    password ~ '[a-z]' AND
+    password ~ '[!?@#%&$]' AND
+    LENGTH(password) >= 8
+);
+-------------------------------------------------------------
+3) Per ogni post pubblicato deve esserci una sola notifica
+
+ALTER TABLE Notifica
+ADD CONSTRAINT  notifica_per_post UNIQUE (id_notifica, id_post_pubblicato);
+-----------------------------------------------------------------
+4) un utente puo' far parte di un gruppo una sola volta.
+
+ALTER TABLE Partecipanti_al_gruppo
+	ADD CONSTRAINT partecipa_una_volta UNIQUE(email_membro, tag_gruppo);
+-------------------------------------------------------------------------------
+5) check unicità richieste non possono esistere due richieste entrambe a true;
+ALTER TABLE Richiesta
+ADD CONSTRAINT accettato_una_volta UNIQUE(
