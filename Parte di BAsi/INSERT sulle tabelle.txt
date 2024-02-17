@@ -8,16 +8,24 @@ insert into Utente (username,email,password,descrizione,img_profilo) values ('Fr
 insert into Utente (username,email,password,descrizione) values ('Alessandro','Ale@email.it','Aleandro2002!','Ciao a tutti sono Ale');
 
 insert into Utente (username,email,password,descrizione) values ('Benedetta','benny@email.it','Benny2002!','Ciao a tutti sono Benedetta');
+
+insert into Utente (username,email,password,descrizione) values ('OfficerK','Officer@email.it','OfficerK2049!','Sto solo facendo il mio lavoro');
+
+--insert into Utente (username,email,password,descrizione) values ('Mila','Mila@email.it','Mila1994!','Ciao a tutti sono una brava giocatrice');
 ---------------------------------------------------------------------------------------------
 INSERT TABELLA GRUPPO 
 insert into gruppo (tag,tema,email_creatore) values ('Anime','AnimeUnina','Sabrina@email.it');
 
 insert into gruppo (tag,tema,email_creatore) values ('VideoGame','VideoGameUnina','Matteo@email.it');
 
-insert into gruppo (tag,tema,email_creatore) values ('WebTecnology','VideoGameUnina','Vitale@email.it');
+insert into gruppo (tag,tema,email_creatore) values ('WebTecnology','WebTecnology','Vitale@email.it');
+
+insert into gruppo (tag,tema,email_creatore) values ('pallavolo','PallavoloUnina','Mila@email.it');
 -----------------------------------------------------------------------------------------------
 INSERT POST
-insert into Post (didascalia,email_creatore_post,tag_gruppo,percorso_file) values ('prova trigger post','sab@email.it','Anime','ciao.jpg');
+insert into Post (didascalia,email_creatore_post,tag_gruppo,percorso_file) values ('Ciao il mio primo post su AnimeUnina','Sabrina@email.it','Anime','Fotin.jpg');
+insert into Post (didascalia,email_creatore_post,tag_gruppo,percorso_file) values ('prova trigger post','Matteo@email.it','Anime','Foto.jpg');
+insert into Post (didascalia,email_creatore_post,tag_gruppo,percorso_file) values ('prova trigger post','sab@email.it','Anime','');
 -----------------------------------------------------------------
 INSERT TABELLA RICHIESTA
 insert into richiesta (email_utente,tag_gruppo) values ('Vitale@email.it','Anime');
@@ -36,3 +44,18 @@ update richiesta
 insert su AMICIZIA
 insert into amicizia(email_utente_1,email_utente_2) values ('','')
 -----------------------------------------
+INSERT SU MI_PIACE
+insert into mi_piace(email_utente,id_post) values ('Vitale@email.it',6);
+--------------------------
+isnert commento
+insert into commento(commento,email_utente,id_post)values('bello sto post','Vitale@email.it',6);
+
+--------------------------------------------------------------------
+--insert into Utente (username,email,password,descrizione) values ('OfficerK','Officer@email.it','OfficerK2049!','Sto solo facendo il mio lavoro');
+--insert into commento(commento,email_utente,id_post)values('uau','benny@email.it',3);
+--insert into mi_piace(email_utente,id_post) values ('Matteo@email.it',3);
+--insert into Utente (username,email,password,descrizione) values ('Mila','Mila@email.it','Mila1994!','Ciao a tutti sono una gatta cattiva');
+--insert into gruppo (tag,tema,email_creatore) values ('pallavolo','PallavoloUnina','Mila@email.it');
+--insert into richiesta(email_utente,tag_gruppo) values ('Officer@email.it','pallavolo');
+--insert into mi_piace(email_utente,id_post) values ('Mila@email.it',7);
+

@@ -345,3 +345,73 @@ BEFORE UPDATE ON Richiesta
 FOR EACH ROW 
 EXECUTE FUNCTION richiestaNonModificabile();
 /
+
+----------------------------------------------------------------------
+12)Un utente non puo mettere like ad un post di un gruppo di cui non fa parte
+CREATE OR REPLACE FUNCTION MiPiaceGruppoValido()
+RETURNS TRIGGER
+LANGUAGE plpgsql
+AS $MiPiaceGruppoValido$
+DECLARE
+	gruppo post.tag_gruppo%TYPE;
+	partecipazione INTEGER := 0;
+    
+    
+BEGIN
+
+    SELECT P.tag_gruppo INTO gruppo
+	FROM POST as P
+	WHERE P.id_post = NEW.id_post;
+ 
+	
+	SELECT COUNT(*) INTO partecipazione
+	FROM Partecipanti_al_gruppo as PG
+	WHERE PG.tag_gruppo = gruppo AND PG.email_membro = NEW.email_utente;
+
+    IF (partecipazione <> 1) THEN
+        RAISE EXCEPTION 'L''utente non può mettere mi piace a questo Post';
+    END IF;
+    
+    RETURN NEW;
+END;
+$MiPiaceGruppoValido$;
+
+CREATE TRIGGER MiPiaceGruppoValido
+BEFORE INSERT ON Mi_Piace
+FOR EACH ROW 
+EXECUTE FUNCTION MiPiaceGruppoValido();
+------------------------------------------------------------------------------
+13)Un utente  non puo commentare ad un post di un gruppo di cui non fa parte
+CREATE OR REPLACE FUNCTION MiPiaceGruppoValido()
+RETURNS TRIGGER
+LANGUAGE plpgsql
+AS $MiPiaceGruppoValido$
+DECLARE
+	gruppo post.tag_gruppo%TYPE;
+	partecipazione INTEGER := 0;
+    
+    
+BEGIN
+
+    SELECT P.tag_gruppo INTO gruppo
+	FROM POST as P
+	WHERE P.id_post = NEW.id_post;
+ 
+	
+	SELECT COUNT(*) INTO partecipazione
+	FROM Partecipanti_al_gruppo as PG
+	WHERE PG.tag_gruppo = gruppo AND PG.email_membro = NEW.email_utente;
+
+    IF (partecipazione <> 1) THEN
+        RAISE EXCEPTION 'L''utente non può commentare sotto a questo Post';
+    END IF;
+    
+    RETURN NEW;
+END;
+$MiPiaceGruppoValido$;
+
+
+CREATE TRIGGER CommentoGruppoValido
+BEFORE INSERT ON Commento
+FOR EACH ROW 
+EXECUTE FUNCTION CommentoGruppoValido();
