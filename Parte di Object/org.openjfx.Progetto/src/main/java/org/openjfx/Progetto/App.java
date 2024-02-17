@@ -9,15 +9,26 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+import org.openjfx.Progetto.Entity.ClassiDao.Statement;
+
 /**
  * JavaFX App
  */
 public class App extends Application {
 
     private static Scene scene;
+    public Statement stato;
 
     @Override
     public void start(Stage stage) throws IOException {
+    	//E UNA PROVAAAAAAAAA
+    	
+    	if(stato.getConnection()!= null) {
+    		System.out.println("Ciao dovrebbe anda");
+    	}
+    	else {
+    		System.out.println("Uffa non va");
+    	}
         scene = new Scene(loadFXML("ProvaFinestraLogin"), 873, 609);
         scene = new Scene(loadFXML("ProvaFinestraLogin"), 640, 480);
         //String css = this.getClass().getResource("Tema.css").toExternalForm();
