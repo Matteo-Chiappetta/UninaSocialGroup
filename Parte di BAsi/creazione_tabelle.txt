@@ -10,12 +10,12 @@ create table Utente(
 
 
 ----------------------------------------------
-create table Amicizia(
+create table seguiti(
 	email_utente_1 varchar(60),
 	email_utente_2 varchar(60),
 	constraint fk_utente_1 Foreign key (email_utente_1)references Utente(email) ON DELETE CASCADE,
 	constraint fk_utente_2 Foreign key (email_utente_2)references Utente(email) ON DELETE CASCADE,
-	constraint amicizia_unica UNIQUE (email_utente_1, email_utente_2)
+	constraint segui_unico UNIQUE (email_utente_1, email_utente_2)
 );
 
 -------------------------------------------------------------------------------------------------------
