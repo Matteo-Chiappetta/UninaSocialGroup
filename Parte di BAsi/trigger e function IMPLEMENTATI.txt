@@ -194,27 +194,11 @@ RETURNS TRIGGER
 LANGUAGE plpgsql
 AS $postGruppoValido$
 DECLARE
-    recupera_partecipazioni CURSOR FOR
-        SELECT P.tag_gruppo
-        FROM Partecipanti_al_gruppo AS P
-        WHERE P.email_membro = NEW.email_creatore_post;
-        
-    gruppo Partecipanti_al_gruppo.tag_gruppo%TYPE;
-    valid INTEGER;
+    valid INTEGER := 0;
 BEGIN
-    valid := 0;
-    OPEN recupera_partecipazioni;
-    
-    LOOP
-        FETCH recupera_partecipazioni INTO gruppo;
-        EXIT WHEN valid = 1 OR NOT FOUND; 
-        
-        IF (gruppo = NEW.tag_gruppo) THEN
-            valid := 1;
-        END IF;
-    END LOOP;
-    
-    CLOSE recupera_partecipazioni; 
+  	SELECT COUNT(*) INTO valid
+	FROM Partecipanti_al_gruppo as PG
+	WHERE PG.tag_gruppo = NEW.tag_gruppo AND PG.email_membro = NEW.email_creatore_post;
 
     IF (valid <> 1) THEN
         RAISE EXCEPTION 'L''utente non può pubblicare in questo gruppo';
@@ -223,6 +207,7 @@ BEGIN
     RETURN NEW;
 END;
 $postGruppoValido$;
+
 
 
 
@@ -382,10 +367,10 @@ FOR EACH ROW
 EXECUTE FUNCTION MiPiaceGruppoValido();
 ------------------------------------------------------------------------------
 13)Un utente  non puo commentare ad un post di un gruppo di cui non fa parte
-CREATE OR REPLACE FUNCTION MiPiaceGruppoValido()
+CREATE OR REPLACE FUNCTION CommentoGruppoValido()
 RETURNS TRIGGER
 LANGUAGE plpgsql
-AS $MiPiaceGruppoValido$
+AS $CommentoGruppoValido$
 DECLARE
 	gruppo post.tag_gruppo%TYPE;
 	partecipazione INTEGER := 0;
@@ -408,7 +393,7 @@ BEGIN
     
     RETURN NEW;
 END;
-$MiPiaceGruppoValido$;
+$CommentoGruppoValido$;
 
 
 CREATE TRIGGER CommentoGruppoValido
