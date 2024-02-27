@@ -34,7 +34,7 @@
             <RowConstraints maxHeight="308.0" minHeight="10.0" percentHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Label maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="48.0" style="-fx-background-color: transparent; -fx-font-family: 'Arial Rounded MT Bold'; -fx-font-size: 19;" text="Ciao!" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+            <Label maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="58.0" style="-fx-background-color: transparent; -fx-font-family: 'Arial Rounded MT Bold'; -fx-font-size: 19;" text="Ciao!" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
                <GridPane.margin>
                   <Insets />
                </GridPane.margin>
@@ -63,7 +63,7 @@
                   </LinearGradient>
                </textFill>
             </Label>
-            <ImageView fx:id="ImgProfilo" fitHeight="150.0" fitWidth="188.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <ImageView fx:id="ImgLogo" fitHeight="150.0" fitWidth="188.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <image>
                   <Image url="@../Immagine/USGtrans.png" />
                </image>
@@ -100,7 +100,7 @@
                   <Font size="10.0" />
                </font>
             </Hyperlink>
-            <JFXButton maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="139.0" style="-fx-background-color: linear-gradient(to right, #7843e6, #ff48dc, #7843e6); -fx-background-radius: 20 20 20 20;" text="Profilo" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+            <JFXButton fx:id="profilo" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#SwitchFinestraProfilo" prefHeight="27.0" prefWidth="139.0" style="-fx-background-color: linear-gradient(to right, #7843e6, #ff48dc, #7843e6); -fx-background-radius: 20 20 20 20;" text="Profilo" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>

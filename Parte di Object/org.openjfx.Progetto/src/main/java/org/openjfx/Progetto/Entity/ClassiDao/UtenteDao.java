@@ -8,8 +8,17 @@ import java.util.ArrayList;
 
 import org.openjfx.Progetto.Entity.Utente;
 
+import javafx.collections.ObservableList;
+
 
 public class UtenteDao{
+	private static Utente utenteCorrente;
+	
+	//metodo per recuperare tutte le informazioni dell'utente che ha effettuato il login
+		public static Utente getUtente() {
+			return utenteCorrente;
+		}
+		
 	//Metodo per fare il login tramite le credenziali di un utente
 	public boolean Login(String inEmail,String inPassword) {
 		//Assegno la connessione del database al metodo
@@ -17,6 +26,7 @@ public class UtenteDao{
 		//Query che verifica email e password dell utente
 		String query = "select count(*) as numero from utente where email = '"+inEmail+"' AND password = '"+inPassword+"' ";
 		boolean isValido;
+		
 		try {
 			//verifico che l'applicazione si connette al database
 			Statement st1 = connessione.createStatement();
@@ -25,9 +35,10 @@ public class UtenteDao{
 			res1.next();
 			//variabile per salvare il risultato della query
 			int numero = res1.getInt("numero");
-			
 			if(numero == 1) {
 				isValido = true;
+				//se il login è verificato assegno gli attributi dell'utente che ha eseguito il login ad una variabile statica per mantenerne le informazioni
+				utenteCorrente = new Utente(this.recuperaUtente(inEmail));
 			}
 			else {
 				isValido = false;
@@ -39,24 +50,32 @@ public class UtenteDao{
 			e.printStackTrace();
 			return false;
 		}
+		//se è valido inoltre accediamo alla finestra della HomePage
 		return isValido;
 	}
-	public ArrayList <String> ListaUtenti(String inUserName){
-		ArrayList <String> listaUtenti = new ArrayList <String>();
+	
+	
+	
+	
+	//metodo che prende una stringa in input e ne restituisce la lista degli utenti che hanno quella stringa compresa nell'username
+	public ArrayList<Utente> ListaUtenti(String inUserName){
+		ArrayList<Utente> listaUtenti = new ArrayList<Utente>();
 		Connection connessione = DbConnect.getConnection();
-		String query = "select username from utente where username LIKE '%"+inUserName+"%' order by username";
+		//la ricerca viene fatta con ILIKE che ricerca la stringa o carattere in UPPER e lower case 
+		String query = "select username,email from utente where username ILIKE '%"+inUserName+"%' order by username";
 		
 		try {
 			Statement st1 = connessione.createStatement();
 			ResultSet res1 = st1.executeQuery(query);
+			//scorro la select risultante e l'assegno all'arraylist
 			while(res1.next()) {
-				listaUtenti.add(res1.getString("username"));
+				listaUtenti.add(recuperaUtente(res1.getString("Email")));
 			}
-			
-			for(String username : listaUtenti) {
-				System.out.println(username);
+			//stampa della lista
+			for(Utente utente : listaUtenti) {
+				System.out.println(utente);
 			}
-			
+			//chiudo la connessione
 			res1.close();
 			connessione.close();
 		}catch(SQLException e){
@@ -65,17 +84,14 @@ public class UtenteDao{
 		}
 		return listaUtenti;
 	}
-	/*
-	 * SELECT *
-FROM   Fatture
-INNER/LEFT/RIGHT/FULL 
-JOIN   Fornitori
-  ON Fatture.IdFornitore = Fornitori.IdFornitore;*/
+
 	
-	public ArrayList <String> ricercaPartecipazioni(String inUserName){
+	
+	//metodo che prende una stringa ,contenente un email ,in input e ne restituisce la lista dei gruppi di cui fa parte 
+	public ArrayList <String> ricercaPartecipazioni(String inEmail){
 		ArrayList <String> listaPartecipazioni = new ArrayList <String>();
 		Connection connessione = DbConnect.getConnection();
-		String query = "select P.tag_gruppo from partecipanti_al_gruppo as P JOIN utente as u on u.email = P.email_membro where u.username = '"+inUserName+"'";
+		String query = "select tag_gruppo from partecipanti_al_gruppo where email_membro = '"+inEmail+"'";
 		try {
 			Statement st1 = connessione.createStatement();
 			ResultSet res1 = st1.executeQuery(query);
@@ -95,7 +111,11 @@ JOIN   Fornitori
 		}
 		return listaPartecipazioni;
 	}
-	//ATTENTO LA RICERCA LA FA PER EMAIL E NON USERNAME
+	
+	
+	
+	
+	//metodo che prende una stringa ,contenente un email ,in input e ne restituisce la lista dei seguiti di quell'utente
 	public ArrayList <String> listaSeguiti(String inEmail){
 		ArrayList <String> listaSeguiti = new ArrayList <String>();
 		Connection connessione = DbConnect.getConnection();
@@ -119,4 +139,62 @@ JOIN   Fornitori
 		}
 		return listaSeguiti;
 	}
+	
+	
+	
+	
+	//Metodo che data una stringa contenente un email restituisce quell utente
+	public Utente recuperaUtente(String inEmail) {
+		Connection connessione = DbConnect.getConnection();
+		String query = "select * from Utente where email = '"+inEmail+"'";
+		
+		try {
+			Statement st1 = connessione.createStatement();
+			ResultSet res1 = st1.executeQuery(query);
+			// String imgProfilo, String descrizione,String password
+			res1.next();
+			Utente utenteRicercato = new Utente(res1.getString("username"),res1.getString("email"),res1.getString("img_profilo"),res1.getString("descrizione"),res1.getString("password"));
+			res1.close();
+			connessione.close();
+			return utenteRicercato;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	
+	
+	
+	
+	//Metodo che modifica la descrizione dell'utente corrente
+	public void ModificaDescrizioneUtente(Utente utenteDaModificare,String nuovaDescrizione) {
+		Connection connessione = DbConnect.getConnection();
+		String query = "UPDATE Utente set descrizione = '"+nuovaDescrizione+"'where email ='"+utenteDaModificare.getEmail()+"'";
+		try {
+			Statement st1 = connessione.createStatement();
+			//utilizziamo il metodo execute update per la modifica da fare al DataBase
+			st1.executeUpdate(query);
+			connessione.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	//Metodo che modifica l'immagine di profilo dell'utente corrente
+	public void ModificaImgProfiloUtente(Utente utenteDaModificare,String nuovaImgProfilo) {
+		Connection connessione = DbConnect.getConnection();
+		String query = "UPDATE Utente set img_profilo = '"+nuovaImgProfilo+"'where email ='"+utenteDaModificare.getEmail()+"'";
+		try {
+			Statement st1 = connessione.createStatement();
+			st1.executeUpdate(query);
+			connessione.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
 }

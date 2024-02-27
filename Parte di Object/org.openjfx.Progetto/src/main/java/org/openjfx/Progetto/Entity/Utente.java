@@ -7,7 +7,25 @@ public class Utente {
 	private String imgProfilo;
 	private String descrizione;
 
-
+	public Utente (Utente utente) {
+		this.userName = utente.userName;
+		this.email = utente.email;
+		this.password = utente.password;
+		this.imgProfilo = utente.imgProfilo;
+		this.descrizione = utente.descrizione;
+	}
+	@Override
+	public String toString() {
+		return userName;
+	}
+	public Utente(String userName, String email, String password, String imgProfilo, String descrizione) {
+		super();
+		this.userName = userName;
+		this.email = email;
+		this.password = password;
+		this.imgProfilo = imgProfilo;
+		this.descrizione = descrizione;
+	}
 	public String getImgProfilo() {
 		return imgProfilo;
 	}

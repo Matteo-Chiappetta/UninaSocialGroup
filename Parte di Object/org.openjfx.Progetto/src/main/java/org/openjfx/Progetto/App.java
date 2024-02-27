@@ -30,7 +30,6 @@ public class App extends Application {
     		System.out.println("Uffa non va");
     	}*/
         scene = new Scene(loadFXML("ProvaFinestraLogin"), 873, 609);
-        scene = new Scene(loadFXML("ProvaFinestraLogin"), 640, 480);
         stage.setScene(scene);
         stage.setTitle("Unina Social Group");
         //stage.getIcons().add(new Image("file:icon.png"));

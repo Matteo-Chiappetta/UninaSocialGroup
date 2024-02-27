@@ -1,25 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXListView?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="578.0" prefWidth="922.0" style="-fx-background-color: linear-gradient(to right, #7843e6, #ff48dc, #48f4ff, #ff48dc, #7843e6);" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.Progetto.Boundary.RicercaUtentiController">
    <children>
-      <ScrollPane layoutX="285.0" layoutY="24.0" prefHeight="531.0" prefWidth="623.0" style="-fx-background-radius: 15 15 15 15;">
-         <content>
-            <VBox prefHeight="552.0" prefWidth="265.0" style="-fx-background-radius: 15 15 15 15;">
-               <children>
-                  <JFXTextArea fx:id="viewListaUtenti" />
-               </children>
-            </VBox>
-         </content>
-      </ScrollPane>
       <JFXButton layoutX="21.0" layoutY="255.0" prefHeight="26.0" prefWidth="252.0" style="-fx-font-family: 'Arial Rounded MT Bold'; -fx-border-color: #7843E6;" text="Cerca Gruppo per Nome" textFill="WHITE">
          <cursor>
             <Cursor fx:constant="HAND" />
@@ -42,5 +31,6 @@
       </JFXButton>
       <Label layoutX="21.0" layoutY="25.0" prefHeight="17.0" prefWidth="252.0" text="Ricerca Utente" />
       <Label layoutX="21.0" layoutY="229.0" prefHeight="17.0" prefWidth="252.0" text="Altre opzioni" />
+      <JFXListView fx:id="listaUtenti" layoutX="602.0" layoutY="30.0" onMouseClicked="#vaiInProfiloUtente" prefHeight="518.0" prefWidth="220.0" />
    </children>
 </AnchorPane>
