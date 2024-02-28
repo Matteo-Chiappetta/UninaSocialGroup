@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 import org.openjfx.Progetto.Entity.ClassiDao.DbConnect;
+import org.openjfx.Progetto.Entity.ClassiDao.PostDao;
 
 /**
  * JavaFX App
@@ -29,6 +30,7 @@ public class App extends Application {
     	else {
     		System.out.println("Uffa non va");
     	}*/
+    	
         scene = new Scene(loadFXML("ProvaFinestraLogin"), 873, 609);
         stage.setScene(scene);
         stage.setTitle("Unina Social Group");
@@ -37,6 +39,9 @@ public class App extends Application {
         stage.getIcons().add(logo);
         stage.setTitle("UninaSocialGroup - Sing In");
         stage.show();
+        PostDao post = new PostDao();
+        post.listaPostGruppo(STYLESHEET_CASPIAN);
+        post.listaPostGruppo(STYLESHEET_CASPIAN);
     }
 
     public static void setRoot(String fxml) throws IOException {

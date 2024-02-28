@@ -1,34 +1,35 @@
 package org.openjfx.Progetto.Entity;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class Post {
-	private Date dataPubblicazione;
+	@Override
+	public String toString() {
+		return "Post [idPost=" + idPost + ", dataPubblicazione=" + dataPubblicazione + ", didascalia=" + didascalia
+				+ ", tipo_file=" + tipo_file + ", gruppo=" + gruppo + ", utenteCreatore=" + utenteCreatore + "]";
+	}
+
+	private int idPost;
+	private Timestamp dataPubblicazione;
 	private String didascalia;
-	private int numMiPiace;
-	private int numCommenti;
+	private String tipo_file;
+	private Gruppo gruppo;
+	private Utente utenteCreatore;
 
-	public int getNumMiPiace() {
-		return numMiPiace;
+	public int getIdPost() {
+		return idPost;
 	}
 
-	public void setNumMiPiace(int numMiPiace) {
-		this.numMiPiace = numMiPiace;
-	}
-
-	public int getNumCommenti() {
-		return numCommenti;
-	}
-
-	public void setNumCommenti(int numCommenti) {
-		this.numCommenti = numCommenti;
+	public void setIdPost(int idPost) {
+		this.idPost = idPost;
 	}
 
 	public Date getDataPubblicazione() {
 		return dataPubblicazione;
 	}
 
-	public void setDataPubblicazione(Date dataPubblicazione) {
+	public void setDataPubblicazione(Timestamp dataPubblicazione) {
 		this.dataPubblicazione = dataPubblicazione;
 	}
 
@@ -39,4 +40,17 @@ public class Post {
 	public void setDidascalia(String didascalia) {
 		this.didascalia = didascalia;
 	}
+
+	public Post(int idPost, Timestamp dataPubblicazione, String didascalia, String tipo_file, Gruppo gruppo,
+			Utente utenteCreatore) {
+		this.idPost = idPost;
+		this.dataPubblicazione = dataPubblicazione;
+		this.didascalia = didascalia;
+		this.tipo_file = tipo_file;
+		this.gruppo = gruppo;
+		this.utenteCreatore = utenteCreatore;
+	}
+	
+	
+
 }

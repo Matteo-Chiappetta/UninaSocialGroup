@@ -9,6 +9,9 @@ import javafx.fxml.FXML;
 import javafx.scene.text.Text;
 
 public class ControllerProfilo {
+	
+
+	Utente utenteCorrente = UtenteDao.getUtenteCorrente();
 	@FXML
 	private JFXTextArea descrizioneUtente;
 	@FXML
@@ -18,7 +21,8 @@ public class ControllerProfilo {
 	@FXML
 	private Text email;
 	
-	public void assegnaValori(@SuppressWarnings("exports") Utente utenteCorrente){
+	public void assegnaValori(){
+		
 		username.setText(utenteCorrente.getUserName());
 		descrizioneUtente.setText(utenteCorrente.getDescrizione());
 		imgProfilo.setText(utenteCorrente.getImgProfilo());

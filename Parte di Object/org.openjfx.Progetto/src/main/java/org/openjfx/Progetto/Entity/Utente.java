@@ -19,7 +19,6 @@ public class Utente {
 		return userName;
 	}
 	public Utente(String userName, String email, String password, String imgProfilo, String descrizione) {
-		super();
 		this.userName = userName;
 		this.email = email;
 		this.password = password;

@@ -5,8 +5,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -61,21 +59,7 @@
                   <Insets />
                </GridPane.margin>
             </VBox>
-            <TabPane prefHeight="200.0" prefWidth="200.0" style="visibility: #7843E6;" GridPane.columnIndex="1" GridPane.rowIndex="1">
-              <tabs>
-                <Tab closable="false" style="-fx-font-family: 'arial rounded mt bold'; -fx-background-color: #7843e6; -fx-effect: null;" text="Amici">
-                  <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="252.0" prefWidth="569.0" />
-                  </content>
-                </Tab>
-                <Tab closable="false" style="-fx-background-color: #7843e6; -fx-font-family: 'arial rounded mt bold';" text="Gruppi">
-                  <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                  </content>
-                </Tab>
-              </tabs>
-            </TabPane>
-            <JFXTextArea fx:id="descrizioneUtente" editable="false" prefHeight="238.0" prefWidth="569.0" GridPane.columnIndex="1">
+            <JFXTextArea fx:id="descrizioneUtente" prefHeight="238.0" prefWidth="569.0" GridPane.columnIndex="1">
                <GridPane.margin>
                   <Insets top="20.0" />
                </GridPane.margin>
@@ -83,7 +67,7 @@
             <Text fx:id="username" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="230.13671875" GridPane.valignment="TOP" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Descrizione" wrappingWidth="230.13671875" GridPane.columnIndex="1" GridPane.valignment="TOP" />
             <Text fx:id="imgProfilo" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="217.33673477172852" />
-            <Text fx:id="email" strokeType="OUTSIDE" strokeWidth="0.0">
+            <Text fx:id="email" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="239.0">
                <GridPane.margin>
                   <Insets bottom="100.0" />
                </GridPane.margin>

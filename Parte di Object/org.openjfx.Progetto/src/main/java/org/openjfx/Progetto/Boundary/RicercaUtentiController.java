@@ -24,13 +24,13 @@ public class RicercaUtentiController {
 	@FXML
 	private Label utente;
 	@FXML
-	JFXListView<Utente> listaUtenti;
+	private JFXListView<Utente> listaUtenti;
 	@FXML
 	TextField ricercaUtenti;
 	@FXML
 	public void RicercaUtenti() {
 		
-		UtenteDao utente = new UtenteDao();
+		UtenteDao utente = new UtenteDao();	
 		
 		listaUtenti.setItems(FXCollections.observableArrayList(utente.ListaUtenti(ricercaUtenti.getText())));
 		/*for(String username : utente.listaSeguiti(ricercaUtenti.getText())) {

@@ -1,6 +1,6 @@
 package org.openjfx.Progetto.Entity;
 
-public class Commento {
+public class Commento extends Interazione{
 	private String commento;
 
 	public String getCommento() {

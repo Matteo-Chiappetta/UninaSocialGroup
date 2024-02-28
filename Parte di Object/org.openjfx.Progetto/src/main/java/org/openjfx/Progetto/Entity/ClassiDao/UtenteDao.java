@@ -14,11 +14,15 @@ import javafx.collections.ObservableList;
 public class UtenteDao{
 	private static Utente utenteCorrente;
 	
-	//metodo per recuperare tutte le informazioni dell'utente che ha effettuato il login
-		public static Utente getUtente() {
+		//metodo per recuperare tutte le informazioni dell'utente che ha effettuato il login
+		public static Utente getUtenteCorrente() {
 			return utenteCorrente;
 		}
-		
+
+		public static void setUtenteCorrente(Utente utenteCorrente) {
+			UtenteDao.utenteCorrente = utenteCorrente;
+		}
+
 	//Metodo per fare il login tramite le credenziali di un utente
 	public boolean Login(String inEmail,String inPassword) {
 		//Assegno la connessione del database al metodo
@@ -153,7 +157,7 @@ public class UtenteDao{
 			ResultSet res1 = st1.executeQuery(query);
 			// String imgProfilo, String descrizione,String password
 			res1.next();
-			Utente utenteRicercato = new Utente(res1.getString("username"),res1.getString("email"),res1.getString("img_profilo"),res1.getString("descrizione"),res1.getString("password"));
+			Utente utenteRicercato = new Utente(res1.getString("username"),res1.getString("email"),res1.getString("password"),res1.getString("img_profilo"),res1.getString("descrizione"));
 			res1.close();
 			connessione.close();
 			return utenteRicercato;

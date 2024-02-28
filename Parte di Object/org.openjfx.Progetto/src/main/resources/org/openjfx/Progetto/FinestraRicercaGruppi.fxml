@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXListView?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="578.0" prefWidth="922.0" style="-fx-background-color: linear-gradient(to right, #7843e6, #ff48dc, #48f4ff, #ff48dc, #7843e6);" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.Progetto.Boundary.RicercaGruppiController">
+   <children>
+      <JFXButton fx:id="cercaTag" layoutX="21.0" layoutY="255.0" onMouseClicked="#cercaPerTag" prefHeight="26.0" prefWidth="252.0" style="-fx-font-family: 'Arial Rounded MT Bold'; -fx-border-color: #7843E6;" text="Cerca Gruppo per tag" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <JFXButton fx:id="cercaTema" layoutX="21.0" layoutY="290.0" onMouseClicked="#cercaPerTema" prefHeight="26.0" prefWidth="252.0" style="-fx-font-family: 'Arial Rounded MT Bold'; -fx-border-color: #7843E6;" text="Cerca Gruppo per Tema" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <TextField fx:id="ricercaGruppi" alignment="TOP_LEFT" layoutX="72.0" layoutY="58.0" promptText="Inserire tema o tag" style="-fx-background-radius: 20 20 20 20;">
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor>
+      </TextField>
+      <JFXButton fx:id="tornaHome" layoutX="21.0" layoutY="335.0" onMouseClicked="#tornaHome" prefHeight="26.0" prefWidth="252.0" style="-fx-font-family: 'Arial Rounded MT Bold'; -fx-border-color: #7843E6;" text="torna alla home" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <Label layoutX="21.0" layoutY="25.0" prefHeight="17.0" prefWidth="252.0" text="Ricerca gruppi" />
+      <Label layoutX="21.0" layoutY="229.0" prefHeight="17.0" prefWidth="252.0" text="Altre opzioni" />
+      <JFXListView fx:id="listaGruppi" layoutX="602.0" layoutY="30.0" onMouseClicked="#vaiInGruppo" prefHeight="518.0" prefWidth="220.0" />
+   </children>
+</AnchorPane>

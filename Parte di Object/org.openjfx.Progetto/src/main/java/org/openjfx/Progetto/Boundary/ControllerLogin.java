@@ -6,6 +6,9 @@ import org.openjfx.Progetto.App;
 import org.openjfx.Progetto.Entity.ClassiDao.UtenteDao;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
@@ -21,9 +24,15 @@ public class ControllerLogin {
 	@FXML
 	PasswordField passwordLogin;
 	@FXML
+	Label username;
+	SwitchFinestre switchFinestra = new SwitchFinestre();
+	@FXML
 	private void ProvaLogin() throws IOException {
         if(utente.Login(emailLogin.getText(),passwordLogin.getText())) {
-        	App.setRoot("HomePage2");
+        	
+        	switchFinestra.SwitchFinestraHome();
+        	
+        	//username.setText(utente.getUtenteCorrente().getUserName());
         }
         else
         {

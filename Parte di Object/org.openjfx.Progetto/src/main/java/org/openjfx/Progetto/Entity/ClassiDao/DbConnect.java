@@ -4,8 +4,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DbConnect{
-	private static String url = "jdbc:postgresql://localhost:5432/postgres";
-	static String password ="Lanutella99";
+	private static String url = "jdbc:postgresql://localhost:5432/Progetto";
+	static String password ="ciao";
 	static String userName ="postgres";
 	
 	public static Connection getConnection() {
