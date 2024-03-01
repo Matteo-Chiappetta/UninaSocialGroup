@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="527.0" prefWidth="809.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.Progetto.Controller.ControllerProfilo">
+   <children>
+      <GridPane layoutY="-14.0" prefHeight="527.0" prefWidth="809.0" style="-fx-background-color: linear-gradient(to bottom, #7843e6, #ff48dc, #7843e6);" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="291.20001220703125" minWidth="10.0" percentWidth="29.67" prefWidth="178.40001220703124" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="451.20001220703125" minWidth="10.0" percentWidth="70.33" prefWidth="422.3999877929687" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints maxHeight="527.0" minHeight="10.0" prefHeight="266.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="348.0" minHeight="0.0" prefHeight="261.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <VBox pickOnBounds="false" prefHeight="200.0" prefWidth="100.0" spacing="5.0" GridPane.rowIndex="1">
+               <children>
+                  <JFXButton fx:id="RicercaUtenti" prefHeight="26.0" prefWidth="252.0" style="-fx-font-family: 'Arial Rounded MT Bold'; -fx-border-color: #7843E6;" text="Cerca Utenti" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <JFXButton fx:id="cercaGruppo" layoutX="10.0" layoutY="168.0" onMouseClicked="#cercaGruppo" prefHeight="26.0" prefWidth="252.0" style="-fx-font-family: 'Arial Rounded MT Bold'; -fx-border-color: #7843E6;" text="Cerca Gruppo " textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <JFXButton fx:id="ReportMensile" prefHeight="26.0" prefWidth="252.0" style="-fx-font-family: 'Arial Rounded MT Bold'; -fx-border-color: #7843E6;" text="Report mensile" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <JFXButton fx:id="homeButton" onMouseClicked="#tornaHome" prefHeight="26.0" prefWidth="252.0" style="-fx-font-family: 'Arial Rounded MT Bold'; -fx-border-color: #7843E6;" text="Torna alla Home" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+               </children>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+            </VBox>
+            <JFXTextArea fx:id="descrizioneUtente" editable="false" prefHeight="226.0" prefWidth="314.0" GridPane.columnIndex="1">
+               <GridPane.margin>
+                  <Insets right="300.0" top="40.0" />
+               </GridPane.margin>
+            </JFXTextArea>
+            <Text fx:id="email" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-background-color: transparent; -fx-font-family: 'Arial Rounded MT Bold'; -fx-font-size: 19;" wrappingWidth="239.0">
+               <GridPane.margin>
+                  <Insets bottom="100.0" />
+               </GridPane.margin>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Label alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="150.0" style="-fx-background-color: transparent; -fx-font-family: 'Arial Rounded MT Bold'; -fx-font-size: 24;" text="Descrizione" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.valignment="TOP">
+               <font>
+                  <Font size="24.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets top="10.0" />
+               </GridPane.margin>
+            </Label>
+            <ImageView fx:id="imgProfilo" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.valignment="BOTTOM" />
+            <TabPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: trasparent;" tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="1" GridPane.rowIndex="1">
+              <tabs>
+                <Tab style="-fx-font-family: 'arial rounded mt bold'; -fx-text-base-color: #ffffff; -fx-background-color: #7843e6;" text="Follower">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <JFXListView fx:id="listaFollower" layoutX="14.0" layoutY="9.0" onMouseClicked="#vaiInProfiloUtenteFollower" prefHeight="215.0" prefWidth="542.0" />
+                           </children>
+                        </AnchorPane>
+                  </content>
+                </Tab>
+                  <Tab style="-fx-font-family: 'arial rounded mt bold'; -fx-text-base-color: #ffffff; -fx-background-color: #7843e6;" text="Seguiti">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <JFXListView fx:id="listaSeguiti" layoutX="14.0" layoutY="9.0" onMouseClicked="#vaiInProfiloUtenteSeguiti" prefHeight="215.0" prefWidth="542.0" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab style="-fx-font-family: 'arial rounded mt bold'; -fx-text-base-color: #ffffff; -fx-background-color: #7843e6;" text="Partecipazioni">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <JFXListView fx:id="listaGruppi" layoutX="14.0" layoutY="9.0" prefHeight="215.0" prefWidth="542.0" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+              </tabs>
+            </TabPane>
+            <JFXButton fx:id="modificaDescrizione" onMouseClicked="#cercaGruppo" prefHeight="27.0" prefWidth="176.0" style="-fx-font-family: 'Arial Rounded MT Bold'; -fx-border-color: #7843E6; -fx-border-radius: 20 20 20 20; -fx-background-radius: 20 20 20 20;" text="Modifica Descrizione" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <GridPane.margin>
+                  <Insets right="50.0" />
+               </GridPane.margin>
+            </JFXButton>
+         </children>
+      </GridPane>
+      <Label fx:id="username" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="59.0" prefWidth="217.0" style="-fx-background-color: transparent; -fx-font-family: 'Arial Rounded MT Bold'; -fx-font-size: 36;" textFill="WHITE">
+         <font>
+            <Font size="36.0" />
+         </font>
+         <padding>
+            <Insets top="10.0" />
+         </padding>
+      </Label>
+   </children>
+</AnchorPane>
