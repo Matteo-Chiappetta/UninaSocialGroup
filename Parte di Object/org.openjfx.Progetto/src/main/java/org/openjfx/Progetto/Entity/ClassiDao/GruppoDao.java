@@ -6,7 +6,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import org.openjfx.Progetto.Entity.Gruppo;
-import org.openjfx.Progetto.Entity.Utente;
 
 public class GruppoDao {
 	UtenteDao utente = new UtenteDao();
@@ -59,7 +58,7 @@ public class GruppoDao {
 		ArrayList<Gruppo> listaGruppi = new ArrayList<Gruppo>();
 		Connection connessione = DbConnect.getConnection();
 		//la ricerca viene fatta con ILIKE che ricerca la stringa o carattere in UPPER e lower case 
-		String query = "select tag from gruppo where tema ILIKE '%"+inTag+"%' order by tag";
+		String query = "select tag from gruppo where tag ILIKE '%"+inTag+"%' order by tag";
 		
 		try {
 			Statement st1 = connessione.createStatement();
@@ -80,8 +79,5 @@ public class GruppoDao {
 			
 		}
 		return listaGruppi;
-	}
-	public void cercaGruppoPerTema(String tema) {
-		
 	}
 }

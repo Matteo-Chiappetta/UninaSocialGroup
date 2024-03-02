@@ -1,6 +1,7 @@
 package org.openjfx.Progetto.Entity;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Post {
@@ -16,6 +17,9 @@ public class Post {
 	private String tipo_file;
 	private Gruppo gruppo;
 	private Utente utenteCreatore;
+	private Notifica notificaAssociata;
+	private ArrayList<MiPiace> listaMiPiace;
+	private ArrayList<Commento> listaCommenti;
 
 	public int getIdPost() {
 		return idPost;
@@ -39,6 +43,34 @@ public class Post {
 
 	public void setDidascalia(String didascalia) {
 		this.didascalia = didascalia;
+	}
+
+	
+	
+	public Notifica getNotificaAssociata() {
+		return notificaAssociata;
+	}
+
+	public void setNotificaAssociata(Notifica notificaAssociata) {
+		this.notificaAssociata = notificaAssociata;
+	}
+
+	
+	
+	public ArrayList<MiPiace> getListaMiPiace() {
+		return listaMiPiace;
+	}
+
+	public void setListaMiPiace(ArrayList<MiPiace> listaMiPiace) {
+		this.listaMiPiace = listaMiPiace;
+	}
+
+	public ArrayList<Commento> getListaCommenti() {
+		return listaCommenti;
+	}
+
+	public void setListaCommenti(ArrayList<Commento> listaCommenti) {
+		this.listaCommenti = listaCommenti;
 	}
 
 	public Post(int idPost, Timestamp dataPubblicazione, String didascalia, String tipo_file, Gruppo gruppo,

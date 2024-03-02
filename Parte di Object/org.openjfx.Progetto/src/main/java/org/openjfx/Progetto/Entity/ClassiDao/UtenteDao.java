@@ -5,10 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-
 import org.openjfx.Progetto.Entity.Utente;
-
-import javafx.collections.ObservableList;
 
 
 public class UtenteDao{
@@ -103,10 +100,6 @@ public class UtenteDao{
 				listaPartecipazioni.add(res1.getString("tag_gruppo"));
 			}
 			
-			for(String username : listaPartecipazioni) {
-				System.out.println(username);
-			}
-			
 			res1.close();
 			connessione.close();
 		}catch(SQLException e){
@@ -120,21 +113,16 @@ public class UtenteDao{
 	
 	
 	//metodo che prende una stringa ,contenente un email ,in input e ne restituisce la lista dei seguiti di quell'utente
-	public ArrayList <String> listaSeguiti(String inEmail){
-		ArrayList <String> listaSeguiti = new ArrayList <String>();
+	public ArrayList <Utente> listaSeguiti(String inEmail){
+		ArrayList <Utente> listaSeguiti = new ArrayList <Utente>();
 		Connection connessione = DbConnect.getConnection();
 		String query = "select email_utente_2 from seguiti where email_utente_1 = '"+inEmail+"'";
 		try {
 			Statement st1 = connessione.createStatement();
 			ResultSet res1 = st1.executeQuery(query);
 			while(res1.next()) {
-				listaSeguiti.add(res1.getString("email_utente_2"));
+				listaSeguiti.add(recuperaUtente(res1.getString("email_utente_2")));
 			}
-			
-			for(String username : listaSeguiti) {
-				System.out.println(username);
-			}
-			
 			res1.close();
 			connessione.close();
 		}catch(SQLException e){
@@ -144,7 +132,24 @@ public class UtenteDao{
 		return listaSeguiti;
 	}
 	
-	
+	public ArrayList <Utente> listaFollower(String inEmail){
+		ArrayList <Utente> listaFollower = new ArrayList <Utente>();
+		Connection connessione = DbConnect.getConnection();
+		String query = "select email_utente_1 from seguiti where email_utente_2 = '"+inEmail+"'";
+		try {
+			Statement st1 = connessione.createStatement();
+			ResultSet res1 = st1.executeQuery(query);
+			while(res1.next()) {
+				listaFollower.add(recuperaUtente(res1.getString("email_utente_1")));
+			}
+			res1.close();
+			connessione.close();
+		}catch(SQLException e){
+			e.printStackTrace();
+			
+		}
+		return listaFollower;
+	}
 	
 	
 	//Metodo che data una stringa contenente un email restituisce quell utente

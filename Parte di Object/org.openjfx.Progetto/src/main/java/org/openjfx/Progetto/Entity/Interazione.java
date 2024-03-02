@@ -1,15 +1,20 @@
 package org.openjfx.Progetto.Entity;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 public class Interazione {
-	private Date dataInterazione;
+	private Timestamp dataInterazione;
 
-	public Date getDataInterazione() {
+	public Timestamp getDataInterazione() {
 		return dataInterazione;
 	}
 
-	public void setDataInterazione(Date dataInterazione) {
+	public void setDataInterazione(Timestamp dataInterazione) {
 		this.dataInterazione = dataInterazione;
 	}
+
+	public Interazione(Timestamp dataInterazione2) {
+		this.dataInterazione = dataInterazione2;
+	}
+	
 }

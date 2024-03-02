@@ -1,12 +1,20 @@
 package org.openjfx.Progetto.Entity;
 
+import java.util.ArrayList;
+
 public class Utente {
 	private String userName;
 	private String email;
 	private String password;
 	private String imgProfilo;
 	private String descrizione;
-
+	private ArrayList<Post> postPubblicati;
+	private ArrayList<Utente> listaSeguiti;
+	private ArrayList<Utente> listaFollower;
+	private ArrayList<Notifica> listaNotifiche;
+	
+	
+	
 	public Utente (Utente utente) {
 		this.userName = utente.userName;
 		this.email = utente.email;
@@ -59,7 +67,37 @@ public class Utente {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	/*public void setPassword(String password) {
-		this.password = password;
-	}*/
+	
+	
+	public ArrayList<Post> getPostPubblicati() {
+		return postPubblicati;
+	}
+	public void setPostPubblicati(ArrayList<Post> postPubblicati) {
+		this.postPubblicati = postPubblicati;
+	}
+	
+	
+	public ArrayList<Utente> getListaSeguiti() {
+		return listaSeguiti;
+	}
+	public void setListaSeguiti(ArrayList<Utente> listaSeguiti) {
+		this.listaSeguiti = listaSeguiti;
+	}
+	
+	
+	
+	public ArrayList<Utente> getListaFollower() {
+		return listaFollower;
+	}
+	public void setListaFollower(ArrayList<Utente> listaFollower) {
+		this.listaFollower = listaFollower;
+	}
+	
+	
+	public ArrayList<Notifica> getListaNotifiche() {
+		return listaNotifiche;
+	}
+	public void setListaNotifiche(ArrayList<Notifica> listaNotifiche) {
+		this.listaNotifiche = listaNotifiche;
+	}
 }
