@@ -21,7 +21,7 @@ public class UtenteDao{
 		}
 
 	//Metodo per fare il login tramite le credenziali di un utente
-	public boolean Login(String inEmail,String inPassword) {
+	public boolean login(String inEmail,String inPassword) {
 		//Assegno la connessione del database al metodo
 		Connection connessione = DbConnect.getConnection();
 		//Query che verifica email e password dell utente
@@ -59,7 +59,7 @@ public class UtenteDao{
 	
 	
 	//metodo che prende una stringa in input e ne restituisce la lista degli utenti che hanno quella stringa compresa nell'username
-	public ArrayList<Utente> ListaUtenti(String inUserName){
+	public ArrayList<Utente> listaUtenti(String inUserName){
 		ArrayList<Utente> listaUtenti = new ArrayList<Utente>();
 		Connection connessione = DbConnect.getConnection();
 		//la ricerca viene fatta con ILIKE che ricerca la stringa o carattere in UPPER e lower case 
@@ -178,7 +178,7 @@ public class UtenteDao{
 	
 	
 	//Metodo che modifica la descrizione dell'utente corrente
-	public void ModificaDescrizioneUtente(Utente utenteDaModificare,String nuovaDescrizione) {
+	public void modificaDescrizioneUtente(Utente utenteDaModificare,String nuovaDescrizione) {
 		Connection connessione = DbConnect.getConnection();
 		String query = "UPDATE Utente set descrizione = '"+nuovaDescrizione+"'where email ='"+utenteDaModificare.getEmail()+"'";
 		try {

@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
 
 
 
@@ -21,14 +22,6 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-    	//E UNA PROVAAAAAAAAA
-    	
-    	/*if(stato.getConnection()!= null) {
-    		System.out.println("Ciao dovrebbe anda");
-    	}
-    	else {
-    		System.out.println("Uffa non va");
-    	}*/
     	
         scene = new Scene(loadFXML("ProvaFinestraLogin"), 873, 609);
         stage.setScene(scene);
@@ -38,13 +31,19 @@ public class App extends Application {
         stage.getIcons().add(logo);
         stage.setTitle("UninaSocialGroup - Sing In");
         stage.show();
+        stage.setResizable(false);
     }
 
     public static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));
     }
 
-    private static Parent loadFXML(String fxml) throws IOException {
+    public static Parent loadFXML(String fxml) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
+        return fxmlLoader.load();
+    }
+    
+    public static URL prendiFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
     }

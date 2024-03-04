@@ -6,6 +6,7 @@ import com.jfoenix.controls.JFXListView;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.TextField;
 
 
@@ -20,8 +21,13 @@ public class RicercaUtentiController {
 	public void RicercaUtenti() {
 		
 		UtenteDao utente = new UtenteDao();	
+		/*
+		 * listaUtenti.getItems().addAll(utente.listaUtenti(ricercaUtenti.getText()));
+		 * listaUtenti.setCellFactory(param -> new ListCell<Utente>());
+		 */
 		
-		listaUtenti.setItems(FXCollections.observableArrayList(utente.ListaUtenti(ricercaUtenti.getText())));
+			
+		//listaUtenti.setItems(FXCollections.observableArrayList(utente.listaUtenti(ricercaUtenti.getText())));
 		/*for(String username : utente.listaSeguiti(ricercaUtenti.getText())) {
 			
 		}*/

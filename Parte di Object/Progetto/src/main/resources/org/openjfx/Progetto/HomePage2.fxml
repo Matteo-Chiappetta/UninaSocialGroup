@@ -100,7 +100,7 @@
                   <Font size="10.0" />
                </font>
             </Hyperlink>
-            <JFXButton fx:id="profilo" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#profiloPage" prefHeight="27.0" prefWidth="139.0" style="-fx-background-color: linear-gradient(to right, #7843e6, #ff48dc, #7843e6); S: 20 20 20 20;" text="Profilo" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+            <JFXButton fx:id="profilo" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#profiloPage" prefHeight="27.0" prefWidth="139.0" style="-fx-background-color: linear-gradient(to right, #7843e6, #ff48dc, #7843e6); -fx-background-radius: 20 20 20 20;" text="Profilo" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -208,7 +208,7 @@
                   <Glow level="0.25" />
                </effect>
             </JFXButton>
-            <Label fx:id="username" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="109.0" style="-fx-background-color: transparent; -fx-font-family: 'Arial Rounded MT Bold'; -fx-font-size: 19;" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+            <Label fx:id="username" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="105.0" style="-fx-background-color: transparent; -fx-font-family: 'Arial Rounded MT Bold'; -fx-font-size: 19;" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                <font>
                   <Font size="13.0" />
                </font>
@@ -234,7 +234,7 @@
                   </LinearGradient>
                </textFill>
                <padding>
-                  <Insets left="20.0" />
+                  <Insets left="50.0" />
                </padding>
             </Label>
             <Label alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="65.0" style="-fx-background-color: transparent; -fx-font-family: 'Arial Rounded MT Bold'; -fx-font-size: 19;" text="su" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER">

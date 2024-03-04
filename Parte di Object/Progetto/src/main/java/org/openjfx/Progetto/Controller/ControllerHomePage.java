@@ -11,7 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 
 public class ControllerHomePage implements Initializable {
-	SwitchFinestre gestoreFinestre = new SwitchFinestre();
+	GestoreFinestre gestoreFinestre = new GestoreFinestre();
 	@FXML
 	private Label username;
 	

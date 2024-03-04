@@ -1,6 +1,9 @@
 package org.openjfx.Progetto.Entity;
 
+import java.sql.Timestamp;
+
 public class Commento extends Interazione{
+	private int idCommento;
 	private String commento;
 	private Utente utenteCommentatore;
 	private Post postCommentato; 
@@ -27,6 +30,18 @@ public class Commento extends Interazione{
 	}
 
 	public void setPostCommentato(Post postCommentato) {
+		this.postCommentato = postCommentato;
+	}
+	
+	public int getIdCommento() {
+		return idCommento;
+	}
+
+	public Commento(int idCommento,Timestamp dataInterazione, String commento, Utente utenteCommentatore, Post postCommentato) {
+		super(dataInterazione);
+		this.idCommento = idCommento;
+		this.commento = commento;
+		this.utenteCommentatore = utenteCommentatore;
 		this.postCommentato = postCommentato;
 	}
 	

@@ -29,7 +29,7 @@ public class Post {
 		this.idPost = idPost;
 	}
 
-	public Date getDataPubblicazione() {
+	public Timestamp getDataPubblicazione() {
 		return dataPubblicazione;
 	}
 
@@ -47,6 +47,30 @@ public class Post {
 
 	
 	
+	public String getTipo_file() {
+		return tipo_file;
+	}
+
+	public void setTipo_file(String tipo_file) {
+		this.tipo_file = tipo_file;
+	}
+
+	public Gruppo getGruppo() {
+		return gruppo;
+	}
+
+	public void setGruppo(Gruppo gruppo) {
+		this.gruppo = gruppo;
+	}
+
+	public Utente getUtenteCreatore() {
+		return utenteCreatore;
+	}
+
+	public void setUtenteCreatore(Utente utenteCreatore) {
+		this.utenteCreatore = utenteCreatore;
+	}
+
 	public Notifica getNotificaAssociata() {
 		return notificaAssociata;
 	}
@@ -55,8 +79,6 @@ public class Post {
 		this.notificaAssociata = notificaAssociata;
 	}
 
-	
-	
 	public ArrayList<MiPiace> getListaMiPiace() {
 		return listaMiPiace;
 	}
@@ -73,6 +95,7 @@ public class Post {
 		this.listaCommenti = listaCommenti;
 	}
 
+	
 	public Post(int idPost, Timestamp dataPubblicazione, String didascalia, String tipo_file, Gruppo gruppo,
 			Utente utenteCreatore) {
 		this.idPost = idPost;

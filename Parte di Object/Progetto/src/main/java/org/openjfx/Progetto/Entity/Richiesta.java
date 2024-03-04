@@ -15,7 +15,7 @@ public class Richiesta {
 	public void setDataRichiesta(Timestamp dataRichiesta) {
 		this.dataRichiesta = dataRichiesta;
 	}
-	public boolean isAccettato() {
+	public boolean getAccettato() {
 		return accettato;
 	}
 	public void setAccettato(boolean accettato) {

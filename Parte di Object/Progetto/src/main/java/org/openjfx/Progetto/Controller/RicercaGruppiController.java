@@ -9,29 +9,40 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
 public class RicercaGruppiController {
-	private SwitchFinestre tornaHome = new SwitchFinestre();
+	private GestoreFinestre gestoreFinestre = new GestoreFinestre();
 	@FXML
 	private JFXListView<Gruppo> listaGruppi;
 	@FXML
 	private TextField ricercaGruppi;
+	
+	ControllerGruppo controller = new ControllerGruppo();
+	static Gruppo gruppoSelezionato;
 	
 	public void cercaPerTema() {
 		GruppoDao gruppo = new GruppoDao();
 		listaGruppi.setItems(FXCollections.observableArrayList(gruppo.listagruppiPerTema(ricercaGruppi.getText())));
 	}
 	
+	
 	public void cercaPerTag() {
 		GruppoDao gruppo = new GruppoDao();
 		listaGruppi.setItems(FXCollections.observableArrayList(gruppo.listagruppiPerTag(ricercaGruppi.getText())));
 	}
 	
-	public void vaiInGruppo() {
-		Gruppo gruppoSelezionato = listaGruppi.getSelectionModel().getSelectedItem();
-		System.out.println(gruppoSelezionato);
+	
+	public void vaiInGruppo() throws IOException {
+		gruppoSelezionato = listaGruppi.getSelectionModel().getSelectedItem();
+		gestoreFinestre.switchFinestraGruppo();
 	}
+	
+	
 	public void tornaHome() throws IOException {
-		tornaHome.switchFinestraHome();
+		gestoreFinestre.switchFinestraHome();
 	}
-	
-	
+
+
+	public static Gruppo getGruppoSelezionato() {
+		return gruppoSelezionato;
+	}
+
 }

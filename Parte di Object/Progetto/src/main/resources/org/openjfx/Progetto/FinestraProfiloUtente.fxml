@@ -56,7 +56,7 @@
                   <Insets />
                </GridPane.margin>
             </VBox>
-            <JFXTextArea fx:id="descrizioneUtente" editable="false" prefHeight="226.0" prefWidth="314.0" GridPane.columnIndex="1">
+            <JFXTextArea fx:id="descrizioneUtente" disable="true" editable="false" prefHeight="226.0" prefWidth="314.0" GridPane.columnIndex="1">
                <GridPane.margin>
                   <Insets right="300.0" top="40.0" />
                </GridPane.margin>
@@ -78,7 +78,7 @@
                </GridPane.margin>
             </Label>
             <ImageView fx:id="imgProfilo" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.valignment="BOTTOM" />
-            <TabPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: trasparent;" tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="1" GridPane.rowIndex="1">
               <tabs>
                 <Tab style="-fx-font-family: 'arial rounded mt bold'; -fx-text-base-color: #ffffff; -fx-background-color: #7843e6;" text="Follower">
                   <content>
@@ -109,7 +109,7 @@
                   </Tab>
               </tabs>
             </TabPane>
-            <JFXButton fx:id="modificaDescrizione" onMouseClicked="#cercaGruppo" prefHeight="27.0" prefWidth="176.0" style="-fx-font-family: 'Arial Rounded MT Bold'; -fx-border-color: #7843E6; -fx-border-radius: 20 20 20 20; -fx-background-radius: 20 20 20 20;" text="Modifica Descrizione" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
+            <JFXButton fx:id="modificaDescrizione" onMouseClicked="#modificaDescrizione" prefHeight="27.0" prefWidth="176.0" style="-fx-font-family: 'Arial Rounded MT Bold'; -fx-border-color: #7843E6; -fx-border-radius: 20 20 20 20; -fx-background-radius: 20 20 20 20;" text="Modifica Descrizione" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>

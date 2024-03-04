@@ -4,14 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-
-import org.openjfx.Progetto.Entity.Gruppo;
 import org.openjfx.Progetto.Entity.Utente;
 import org.openjfx.Progetto.Entity.ClassiDao.UtenteDao;
-
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextArea;
-
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -23,9 +19,9 @@ import javafx.scene.text.Text;
 
 
 public class ControllerProfilo implements Initializable{
-	UtenteDao utente = new UtenteDao();
-	SwitchFinestre gestoreFinestre = new SwitchFinestre();
-	Utente utenteCorrente = UtenteDao.getUtenteCorrente();
+	private UtenteDao utente = new UtenteDao();
+	private GestoreFinestre gestoreFinestre = new GestoreFinestre();
+	private Utente utenteCorrente = UtenteDao.getUtenteCorrente();
 	@FXML
 	private JFXTextArea descrizioneUtente;
 	@FXML
@@ -45,22 +41,28 @@ public class ControllerProfilo implements Initializable{
 	public void tornaHome() throws IOException{
 		gestoreFinestre.switchFinestraHome();
 	}
+	
 	@FXML
 	public void cercaGruppo() throws IOException{
 		gestoreFinestre.switchFinestraRicercaGruppi();
 	}
+	@FXML
+	public void modificaDescrizione() throws IOException {
+		gestoreFinestre.switchFinestraModificaDescrizione();
+	}
+	
+	
 	
 	public void assegnaValori(Utente utenteSelezionato) {
 		
 		//Nel caso in cui nessun utente è stato selezionato assegno i valori dell'utente corrente
 		if(utenteSelezionato == null) {
 			utenteSelezionato = utenteCorrente;
-			
 		}
 		//caso in cui abbiamo selezionato un utente ,dalla ricerca, da una lista dei follower o dei seguiti mostrera la pagina profilo di quell'utente
 		try {
 			//controllo se l utente ha o meno un immagine di profilo
-			if(utenteSelezionato.getImgProfilo() == null) {
+			if(utenteSelezionato.getImgProfilo() == null || utenteSelezionato.getImgProfilo().length() < 10) {
 				File file = new File("src\\main\\resources\\org\\openjfx\\Immagine\\utente.jpg");
 				Image image = new Image(file.toURI().toString());
 				imgProfilo.setImage(image);
@@ -78,6 +80,7 @@ public class ControllerProfilo implements Initializable{
 			listaSeguiti.setItems(FXCollections.observableArrayList(utente.listaSeguiti(utenteSelezionato.getEmail())));
 			listaFollower.setItems(FXCollections.observableArrayList(utente.listaFollower(utenteSelezionato.getEmail())));
 			listaGruppi.setItems(FXCollections.observableArrayList(utente.ricercaPartecipazioni(utenteSelezionato.getEmail())));
+			
 		}catch(Exception e){
 			System.out.println("non segue nessun");
 		}
@@ -87,11 +90,11 @@ public class ControllerProfilo implements Initializable{
 		Utente utenteSelezionato = listaFollower.getSelectionModel().getSelectedItem();
 		assegnaValori(utenteSelezionato);
 	}
+	
 	public void vaiInProfiloUtenteSeguiti() {
 		Utente utenteSelezionato = listaSeguiti.getSelectionModel().getSelectedItem();
 		assegnaValori(utenteSelezionato);
 	}
-	
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {

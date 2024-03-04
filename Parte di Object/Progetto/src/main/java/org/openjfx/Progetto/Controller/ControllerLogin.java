@@ -11,9 +11,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
 
-
-
-
 public class ControllerLogin {
 	UtenteDao utente = new UtenteDao();
 	@FXML
@@ -24,10 +21,10 @@ public class ControllerLogin {
 	PasswordField passwordLogin;
 	@FXML
 	Label username;
-	SwitchFinestre switchFinestra = new SwitchFinestre();
+	GestoreFinestre switchFinestra = new GestoreFinestre();
 	@FXML
 	private void ProvaLogin() throws IOException {
-        if(utente.Login(emailLogin.getText(),passwordLogin.getText())) {
+        if(utente.login(emailLogin.getText(),passwordLogin.getText())) {
         	
         	switchFinestra.switchFinestraHome();
         }

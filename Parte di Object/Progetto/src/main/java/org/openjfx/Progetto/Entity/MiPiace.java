@@ -1,10 +1,13 @@
 package org.openjfx.Progetto.Entity;
 
+import java.sql.Timestamp;
+
 public class MiPiace extends Interazione {
+	
 	// Vedere come rappresentare in java la relazione post e mi piace
 	private Utente utenteMiPiace;
 	private Post postPiaciuto;
-	
+	private int idMiPiace;
 	
 	public Utente getUtenteMiPiace() {
 		return utenteMiPiace;
@@ -17,6 +20,15 @@ public class MiPiace extends Interazione {
 	}
 	public void setPostPiaciuto(Post postPiaciuto) {
 		this.postPiaciuto = postPiaciuto;
+	}
+	public int getIdMiPiace() {
+		return idMiPiace;
+	}
+	public MiPiace(int idMiPiace, Utente utenteMiPiace, Post postPiaciuto,Timestamp dataInterazione) {
+		super(dataInterazione);
+		this.utenteMiPiace = utenteMiPiace;
+		this.postPiaciuto = postPiaciuto;
+		this.idMiPiace = idMiPiace;
 	}
 	
 	
