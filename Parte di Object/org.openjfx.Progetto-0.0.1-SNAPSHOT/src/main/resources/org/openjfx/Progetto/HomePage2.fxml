@@ -18,7 +18,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="609.0" prefWidth="873.0" style="-fx-background-color: linear-gradient(to right, #7843e6, #ff48dc, #48f4ff, #ff48dc, #7843e6);" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.Progetto.Boundary.SwitchFinestre">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="609.0" prefWidth="873.0" style="-fx-background-color: linear-gradient(to right, #7843e6, #ff48dc, #48f4ff, #ff48dc, #7843e6);" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.Progetto.Controller.ControllerHomePage">
    <children>
       <GridPane alignment="TOP_CENTER" hgap="10.0" layoutX="228.0" layoutY="51.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="417.0" style="-fx-background-color: #ffffff; -fx-background-radius: 7 7 7 7;" vgap="10.0" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="228.0" AnchorPane.rightAnchor="228.0" AnchorPane.topAnchor="51.0">
          <columnConstraints>
@@ -34,7 +34,7 @@
             <RowConstraints maxHeight="308.0" minHeight="10.0" percentHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Label maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="48.0" style="-fx-background-color: transparent; -fx-font-family: 'Arial Rounded MT Bold'; -fx-font-size: 19;" text="Ciao!" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+            <Label alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="150.0" style="-fx-background-color: transparent; -fx-font-family: 'Arial Rounded MT Bold'; -fx-font-size: 19;" text="Benvenuto" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
                <GridPane.margin>
                   <Insets />
                </GridPane.margin>
@@ -63,7 +63,7 @@
                   </LinearGradient>
                </textFill>
             </Label>
-            <ImageView fx:id="ImgProfilo" fitHeight="150.0" fitWidth="188.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <ImageView fx:id="ImgLogo" fitHeight="150.0" fitWidth="188.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <image>
                   <Image url="@../Immagine/USGtrans.png" />
                </image>
@@ -100,7 +100,7 @@
                   <Font size="10.0" />
                </font>
             </Hyperlink>
-            <JFXButton maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="139.0" style="-fx-background-color: linear-gradient(to right, #7843e6, #ff48dc, #7843e6); -fx-background-radius: 20 20 20 20;" text="Profilo" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+            <JFXButton fx:id="profilo" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#profiloPage" prefHeight="27.0" prefWidth="139.0" style="-fx-background-color: linear-gradient(to right, #7843e6, #ff48dc, #7843e6); -fx-background-radius: 20 20 20 20;" text="Profilo" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -127,7 +127,7 @@
                   <Glow level="0.25" />
                </effect>
             </JFXButton>
-            <JFXButton fx:id="cercaUtente" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#SwitchFinestraRicerca" prefHeight="27.0" prefWidth="139.0" style="-fx-background-color: linear-gradient(to right, #7843e6, #ff48dc, #7843e6); -fx-background-radius: 20 20 20 20;" text="Cerca utente" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+            <JFXButton fx:id="cercaUtente" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#cercaUtente" prefHeight="27.0" prefWidth="139.0" style="-fx-background-color: linear-gradient(to right, #7843e6, #ff48dc, #7843e6); -fx-background-radius: 20 20 20 20;" text="Cerca utente" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -154,7 +154,7 @@
                   <Glow level="0.25" />
                </effect>
             </JFXButton>
-            <JFXButton maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="169.0" style="-fx-background-color: linear-gradient(to right, #7843e6, #ff48dc, #7843e6); -fx-background-radius: 20 20 20 20;" text="Cerca gruppo per Tema" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+            <JFXButton fx:id="cercaGruppo" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#cercaGruppo" prefHeight="27.0" prefWidth="169.0" style="-fx-background-color: linear-gradient(to right, #7843e6, #ff48dc, #7843e6); -fx-background-radius: 20 20 20 20;" text="Cerca gruppo" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="4">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -181,7 +181,7 @@
                   <Glow level="0.25" />
                </effect>
             </JFXButton>
-            <JFXButton maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="169.0" style="-fx-background-color: linear-gradient(to right, #7843e6, #ff48dc, #7843e6); -fx-background-radius: 20 20 20 20;" text="Cerca utente" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER">
+            <JFXButton fx:id="logout" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#logout" prefHeight="27.0" prefWidth="169.0" style="-fx-background-color: linear-gradient(to right, #7843e6, #ff48dc, #7843e6); -fx-background-radius: 20 20 20 20;" text="Logout" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -208,6 +208,61 @@
                   <Glow level="0.25" />
                </effect>
             </JFXButton>
+            <Label fx:id="username" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="105.0" style="-fx-background-color: transparent; -fx-font-family: 'Arial Rounded MT Bold'; -fx-font-size: 19;" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+               <font>
+                  <Font size="13.0" />
+               </font>
+               <textFill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.47058823704719543" green="0.26274511218070984" blue="0.9019607901573181" />
+                           </color>
+                        </Stop>
+                        <Stop offset="0.5074024226110363">
+                           <color>
+                              <Color red="1.0" green="0.2823529541492462" blue="0.8627451062202454" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.47058823704719543" green="0.2705882489681244" blue="0.8980392217636108" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
+            </Label>
+            <Label alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="65.0" style="-fx-background-color: transparent; -fx-font-family: 'Arial Rounded MT Bold'; -fx-font-size: 19;" text="su" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+               <font>
+                  <Font size="13.0" />
+               </font>
+               <textFill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.47058823704719543" green="0.26274511218070984" blue="0.9019607901573181" />
+                           </color>
+                        </Stop>
+                        <Stop offset="0.5074024226110363">
+                           <color>
+                              <Color red="1.0" green="0.2823529541492462" blue="0.8627451062202454" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.47058823704719543" green="0.2705882489681244" blue="0.8980392217636108" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+            </Label>
          </children>
       </GridPane>
    </children>

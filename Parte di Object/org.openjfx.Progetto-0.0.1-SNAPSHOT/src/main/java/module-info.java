@@ -8,7 +8,7 @@ module org.openjfx.Progetto {
 
     opens org.openjfx.Progetto to javafx.fxml;
     exports org.openjfx.Progetto;
-    opens org.openjfx.Progetto.Boundary to javafx.fxml;
-    exports org.openjfx.Progetto.Boundary; 
+    opens org.openjfx.Progetto.Controller to javafx.fxml;
+    exports org.openjfx.Progetto.Controller; 
     
 }
