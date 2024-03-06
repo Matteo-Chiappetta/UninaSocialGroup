@@ -14,6 +14,16 @@
 
 <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="619.0" prefWidth="883.0" style="-fx-background-color: linear-gradient(to right, #7843e6, #ff48dc, #48f4ff, #ff48dc, #7843e6);" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.Progetto.Controller.ControllerGruppo">
    <children>
+      <Label fx:id="tagGruppo" layoutX="29.0" layoutY="20.0" prefHeight="40.0" prefWidth="214.0">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <JFXTextArea fx:id="tema" disable="true" editable="false" layoutX="28.0" layoutY="52.0" prefHeight="188.0" prefWidth="168.0" unFocusColor="TRANSPARENT">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </JFXTextArea>
       <GridPane layoutX="57.0" layoutY="60.0" prefHeight="545.0" prefWidth="770.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="57.0" AnchorPane.rightAnchor="56.0" AnchorPane.topAnchor="60.0">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="251.0" minWidth="10.0" prefWidth="100.0" />
@@ -46,30 +56,22 @@
                   <Insets top="200.0" />
                </GridPane.margin>
             </VBox>
-            <ScrollPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+            <ScrollPane hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="542.0" prefWidth="399.0">
+                     <children>
+                        <GridPane fx:id="panePost" prefHeight="542.4" prefWidth="399.2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                        </GridPane>
+                     </children></AnchorPane>
               </content>
             </ScrollPane>
-            <GridPane fx:id="panePost">
-               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-               </rowConstraints>
-            </GridPane>
          </children>
       </GridPane>
-      <Label fx:id="tagGruppo" layoutX="29.0" layoutY="20.0" prefHeight="40.0" prefWidth="214.0">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Label>
-      <JFXTextArea fx:id="tema" disable="true" editable="false" layoutX="28.0" layoutY="52.0" prefHeight="188.0" prefWidth="168.0" unFocusColor="TRANSPARENT">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </JFXTextArea>
    </children>
 </AnchorPane>

@@ -1,6 +1,7 @@
 package org.openjfx.Progetto.Entity;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Utente {
 	private String userName;
@@ -100,4 +101,18 @@ public class Utente {
 	public void setListaNotifiche(ArrayList<Notifica> listaNotifiche) {
 		this.listaNotifiche = listaNotifiche;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Utente other = (Utente) obj;
+		return Objects.equals(email, other.email);
+	}
+	
+	
 }

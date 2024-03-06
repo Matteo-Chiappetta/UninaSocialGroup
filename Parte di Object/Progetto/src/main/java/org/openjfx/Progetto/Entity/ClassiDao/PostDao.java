@@ -64,10 +64,6 @@ public class PostDao {
 			while(res1.next()) {
 				listaPost.add(recuperaPost(res1.getInt("id_post")));
 			}
-			//stampa della lista
-			for(Post post : listaPost) {
-				System.out.println(post);
-			}
 			//chiudo la connessione
 			res1.close();
 			connessione.close();

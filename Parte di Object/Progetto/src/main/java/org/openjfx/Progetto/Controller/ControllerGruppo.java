@@ -56,12 +56,7 @@ public class ControllerGruppo implements Initializable{
 		
 		tagGruppo.setText(gruppoDaVisualizzare.getTag());
 		tema.setText(gruppoDaVisualizzare.getTema());
-		try {
-			caricaListaPost(prendiListaPost(gruppoDaVisualizzare));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		caricaListaPost();
 		
 	}
 	
@@ -71,8 +66,9 @@ public class ControllerGruppo implements Initializable{
 		for(Post postCorrente : post.listaPostGruppo(gruppo.getTag()) )
 		{
 			System.out.println("Ciaonsono nel for");
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("src\\main\\resources\\org\\openjfx\\Immagine\\Post.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/openjfx/Progetto/Post.fxml"));
 			loader.setController(new ControllerPost(postCorrente));
+			System.out.println(loader.getLocation());
 			System.out.println("Ciaonsono dopo il set controller");
 			System.out.println(postCorrente);
 			listaPost.add(loader.load());
@@ -82,11 +78,17 @@ public class ControllerGruppo implements Initializable{
 		
 	}
 	
-	public void caricaListaPost(List<Node> listaPost) {
-		int colonne = 1;
+	public void caricaListaPost() {
+		
+		int colonne = 0;
 		int righe = 0;
-		for(Node post : listaPost) {
-			panePost.add(post, colonne, righe++);
+		try {
+			for(Node post : prendiListaPost(RicercaGruppiController.getGruppoSelezionato())) {
+				panePost.add(post, colonne, righe++);
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	

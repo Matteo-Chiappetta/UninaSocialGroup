@@ -1,4 +1,4 @@
-package org.openjfx.Progetto.Controller;
+ package org.openjfx.Progetto.Controller;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,6 +22,8 @@ public class ControllerProfilo implements Initializable{
 	private UtenteDao utente = new UtenteDao();
 	private GestoreFinestre gestoreFinestre = new GestoreFinestre();
 	private Utente utenteCorrente = UtenteDao.getUtenteCorrente();
+
+	
 	@FXML
 	private JFXTextArea descrizioneUtente;
 	@FXML
@@ -56,9 +58,7 @@ public class ControllerProfilo implements Initializable{
 	public void assegnaValori(Utente utenteSelezionato) {
 		
 		//Nel caso in cui nessun utente è stato selezionato assegno i valori dell'utente corrente
-		if(utenteSelezionato == null) {
-			utenteSelezionato = utenteCorrente;
-		}
+	
 		//caso in cui abbiamo selezionato un utente ,dalla ricerca, da una lista dei follower o dei seguiti mostrera la pagina profilo di quell'utente
 		try {
 			//controllo se l utente ha o meno un immagine di profilo
@@ -96,8 +96,23 @@ public class ControllerProfilo implements Initializable{
 		assegnaValori(utenteSelezionato);
 	}
 	
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		assegnaValori(null);
+		RicercaUtentiController con = new RicercaUtentiController();
+		Utente utenteSelezionato = con.getUtenteSelezionato();
+		try {
+			if(utenteSelezionato == null || utenteSelezionato.getEmail().equals(utenteCorrente.getEmail())) {
+				assegnaValori(utenteCorrente);
+			}
+			else
+			{
+				assegnaValori(con.getUtenteSelezionato());
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//assegnaValori(utenteDaVisualizzare);
 	}
 }

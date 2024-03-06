@@ -5,9 +5,7 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="578.0" prefWidth="922.0" style="-fx-background-color: linear-gradient(to right, #7843e6, #ff48dc, #48f4ff, #ff48dc, #7843e6);" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.Progetto.Controller.RicercaUtentiController">
    <children>
@@ -26,7 +24,7 @@
             <Cursor fx:constant="TEXT" />
          </cursor>
       </TextField>
-      <JFXButton layoutX="20.0" layoutY="96.0" onMouseClicked="#RicercaUtenti" prefHeight="26.0" prefWidth="252.0" style="-fx-font-family: 'Arial Rounded MT Bold'; -fx-border-color: #7843E6;" text="Ricerca" textFill="WHITE">
+      <JFXButton fx:id="ricerca" layoutX="20.0" layoutY="96.0" onMouseClicked="#RicercaUtenti" prefHeight="26.0" prefWidth="252.0" style="-fx-font-family: 'Arial Rounded MT Bold'; -fx-border-color: #7843E6;" text="Ricerca" textFill="WHITE">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -34,11 +32,5 @@
       <Label layoutX="21.0" layoutY="25.0" prefHeight="17.0" prefWidth="252.0" text="Ricerca Utente" />
       <Label layoutX="21.0" layoutY="229.0" prefHeight="17.0" prefWidth="252.0" text="Altre opzioni" />
       <JFXListView fx:id="listaUtenti" layoutX="508.0" layoutY="30.0" onMouseClicked="#vaiInProfiloUtente" prefHeight="518.0" prefWidth="314.0" />
-      <HBox layoutX="508.0" layoutY="33.0" prefHeight="101.0" prefWidth="314.0">
-         <children>
-            <ImageView fx:id="imgProfilo" fitHeight="101.0" fitWidth="122.0" pickOnBounds="true" preserveRatio="true" />
-            <Label fx:id="username" alignment="CENTER" prefHeight="101.0" prefWidth="162.0" text="Label" />
-         </children>
-      </HBox>
    </children>
 </AnchorPane>
