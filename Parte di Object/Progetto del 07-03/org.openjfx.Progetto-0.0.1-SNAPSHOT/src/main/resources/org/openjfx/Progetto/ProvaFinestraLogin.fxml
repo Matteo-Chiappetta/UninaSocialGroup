@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="609.0" prefWidth="873.0" style="-fx-background-color: linear-gradient(to right, #9967CE,#BA9CF6, #BA9CF6,  #9967CE);" stylesheets="@../StyleCSS/prove.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.Progetto.Controller.ControllerLogin">
+   <children>
+      <GridPane layoutX="264.0" layoutY="31.2" prefHeight="548.0" prefWidth="414.0" style="-fx-background-color: #ffffff; -fx-background-radius: 7 7 7 7;" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="31.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="140.0" minWidth="10.0" percentWidth="25.0" prefWidth="50.0" />
+            <ColumnConstraints maxWidth="212.79996337890626" minWidth="50.0" percentWidth="50.0" prefWidth="212.79996337890626" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="140.0" minWidth="10.0" percentWidth="25.0" prefWidth="50.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints maxHeight="212.00001220703126" minHeight="10.0" prefHeight="191.2" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="212.00001220703126" minHeight="0.0" prefHeight="46.600006103515625" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="143.2000244140625" minHeight="0.0" prefHeight="75.19999389648439" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="213.59998779296876" minHeight="10.0" prefHeight="71.39999389648438" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="226.80002441406253" minHeight="10.0" prefHeight="172.2000061035156" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label prefHeight="17.0" prefWidth="147.0" style="-fx-background-color: transparent; -fx-font-family: 'Arial Rounded MT Bold'; -fx-font-size: 16;" text="Benvenuto su" textFill="#9967ce" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="150.0" fitWidth="188.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+               <image>
+                  <Image url="@../Immagine/USG.jpg" />
+               </image>
+            </ImageView>
+            <TextField fx:id="emailLogin" alignment="TOP_LEFT" promptText="Inserire email" style="-fx-background-radius: 20 20 20 20;" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+               <GridPane.margin>
+                  <Insets bottom="10.0" />
+               </GridPane.margin>
+               <cursor>
+                  <Cursor fx:constant="TEXT" />
+               </cursor>
+            </TextField>
+            <PasswordField fx:id="passwordLogin" promptText="Inserire password" style="-fx-background-radius: 20 20 20 20;" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
+               <GridPane.margin>
+                  <Insets bottom="10.0" />
+               </GridPane.margin>
+               <cursor>
+                  <Cursor fx:constant="TEXT" />
+               </cursor>
+            </PasswordField>
+            <JFXButton fx:id="loginButton" onMouseClicked="#login" prefHeight="27.0" prefWidth="139.0" ripplerFill="#d562be" style="-fx-background-color: linear-gradient(to right, #9967CE,#D562BE, #9967CE); -fx-border-radius: 20 20 20 20; -fx-border-color: #9967CE; -fx-background-radius: 20 20 20 20;" text="LOG IN" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="13.0" />
+               </font>
+               <effect>
+                  <Glow level="0.25" />
+               </effect>
+               <GridPane.margin>
+                  <Insets bottom="15.0" />
+               </GridPane.margin>
+            </JFXButton>
+            <Text fill="#9967ce" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: 'Arial Rounded MT Bold';" text="Email:" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets bottom="20.0" />
+               </GridPane.margin>
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Text>
+            <Text fill="#9967ce" layoutX="89.0" layoutY="275.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: 'Arial Rounded MT Bold';" text="Password:" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets bottom="20.0" />
+               </GridPane.margin>
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Text>
+            <Label layoutX="123.0" layoutY="198.0" prefHeight="23.0" prefWidth="201.0" style="-fx-background-color: transparent; -fx-font-family: 'Arial Rounded MT Bold'; -fx-font-size: 19;" text=" UninaSocialGroup!" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+               <font>
+                  <Font size="13.0" />
+               </font>
+               <textFill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.5921568870544434" green="0.4000000059604645" blue="0.800000011920929" />
+                           </color>
+                        </Stop>
+                        <Stop offset="0.4853658536585365">
+                           <color>
+                              <Color red="0.8352941274642944" green="0.3843137323856354" blue="0.7450980544090271" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.6000000238418579" green="0.40392157435417175" blue="0.8078431487083435" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+            </Label>
+            <ImageView fitHeight="34.0" fitWidth="35.0" opacity="0.73" pickOnBounds="true" preserveRatio="true" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+               <image>
+                  <Image url="@../Immagine/utente.jpg" />
+               </image>
+               <GridPane.margin>
+                  <Insets bottom="10.0" right="10.0" />
+               </GridPane.margin>
+            </ImageView>
+            <ImageView fitHeight="35.0" fitWidth="39.0" layoutX="62.0" layoutY="272.0" opacity="0.73" pickOnBounds="true" preserveRatio="true" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
+               <image>
+                  <Image url="@../Immagine/pwd.jpg" />
+               </image>
+               <GridPane.margin>
+                  <Insets bottom="10.0" right="10.0" />
+               </GridPane.margin>
+            </ImageView>
+            <Hyperlink text="About Us" underline="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </Hyperlink>
+            <Text fx:id="loginError" fill="#d562be" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: 'Arial Rounded MT Bold';" text="password o email errata" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="TOP" />
+         </children>
+      </GridPane>
+   </children>
+</AnchorPane>
