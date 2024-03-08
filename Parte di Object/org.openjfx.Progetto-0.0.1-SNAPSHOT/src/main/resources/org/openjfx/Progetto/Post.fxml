@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="338.0" prefWidth="534.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox layoutX="208.0" layoutY="21.0" prefHeight="326.0" prefWidth="534.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label fx:id="username" prefHeight="48.0" prefWidth="533.0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <JFXTextArea fx:id="didascalia" editable="false" />
+            <HBox prefHeight="113.0" prefWidth="534.0">
+               <children>
+                  <JFXButton fx:id="miPiace" prefHeight="39.0" prefWidth="116.0" text="Mi piace" />
+                  <JFXButton fx:id="aggiungiCommento" prefHeight="39.0" prefWidth="116.0" text="Commenta" />
+                  <ComboBox fx:id="commenti" prefWidth="150.0" promptText="commenti" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

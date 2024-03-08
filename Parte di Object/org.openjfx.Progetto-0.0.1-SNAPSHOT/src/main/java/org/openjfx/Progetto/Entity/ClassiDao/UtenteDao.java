@@ -5,16 +5,23 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-
 import org.openjfx.Progetto.Entity.Utente;
 
 
 public class UtenteDao{
 	private static Utente utenteCorrente;
 	
-	
+		//metodo per recuperare tutte le informazioni dell'utente che ha effettuato il login
+		public static Utente getUtenteCorrente() {
+			return utenteCorrente;
+		}
+
+		public static void setUtenteCorrente(Utente utenteCorrente) {
+			UtenteDao.utenteCorrente = utenteCorrente;
+		}
+
 	//Metodo per fare il login tramite le credenziali di un utente
-	public boolean Login(String inEmail,String inPassword) {
+	public boolean login(String inEmail,String inPassword) {
 		//Assegno la connessione del database al metodo
 		Connection connessione = DbConnect.getConnection();
 		//Query che verifica email e password dell utente
@@ -52,22 +59,22 @@ public class UtenteDao{
 	
 	
 	//metodo che prende una stringa in input e ne restituisce la lista degli utenti che hanno quella stringa compresa nell'username
-	public ArrayList <String> ListaUtenti(String inUserName){
-		ArrayList <String> listaUtenti = new ArrayList <String>();
+	public ArrayList<Utente> listaUtenti(String inUserName){
+		ArrayList<Utente> listaUtenti = new ArrayList<Utente>();
 		Connection connessione = DbConnect.getConnection();
 		//la ricerca viene fatta con ILIKE che ricerca la stringa o carattere in UPPER e lower case 
-		String query = "select username from utente where username ILIKE '%"+inUserName+"%' order by username";
+		String query = "select username,email from utente where username ILIKE '%"+inUserName+"%' order by username";
 		
 		try {
 			Statement st1 = connessione.createStatement();
 			ResultSet res1 = st1.executeQuery(query);
 			//scorro la select risultante e l'assegno all'arraylist
 			while(res1.next()) {
-				listaUtenti.add(res1.getString("username"));
+				listaUtenti.add(recuperaUtente(res1.getString("Email")));
 			}
 			//stampa della lista
-			for(String username : listaUtenti) {
-				System.out.println(username);
+			for(Utente utente : listaUtenti) {
+				System.out.println(utente);
 			}
 			//chiudo la connessione
 			res1.close();
@@ -93,10 +100,6 @@ public class UtenteDao{
 				listaPartecipazioni.add(res1.getString("tag_gruppo"));
 			}
 			
-			for(String username : listaPartecipazioni) {
-				System.out.println(username);
-			}
-			
 			res1.close();
 			connessione.close();
 		}catch(SQLException e){
@@ -110,21 +113,16 @@ public class UtenteDao{
 	
 	
 	//metodo che prende una stringa ,contenente un email ,in input e ne restituisce la lista dei seguiti di quell'utente
-	public ArrayList <String> listaSeguiti(String inEmail){
-		ArrayList <String> listaSeguiti = new ArrayList <String>();
+	public ArrayList <Utente> listaSeguiti(String inEmail){
+		ArrayList <Utente> listaSeguiti = new ArrayList <Utente>();
 		Connection connessione = DbConnect.getConnection();
 		String query = "select email_utente_2 from seguiti where email_utente_1 = '"+inEmail+"'";
 		try {
 			Statement st1 = connessione.createStatement();
 			ResultSet res1 = st1.executeQuery(query);
 			while(res1.next()) {
-				listaSeguiti.add(res1.getString("email_utente_2"));
+				listaSeguiti.add(recuperaUtente(res1.getString("email_utente_2")));
 			}
-			
-			for(String username : listaSeguiti) {
-				System.out.println(username);
-			}
-			
 			res1.close();
 			connessione.close();
 		}catch(SQLException e){
@@ -134,7 +132,24 @@ public class UtenteDao{
 		return listaSeguiti;
 	}
 	
-	
+	public ArrayList <Utente> listaFollower(String inEmail){
+		ArrayList <Utente> listaFollower = new ArrayList <Utente>();
+		Connection connessione = DbConnect.getConnection();
+		String query = "select email_utente_1 from seguiti where email_utente_2 = '"+inEmail+"'";
+		try {
+			Statement st1 = connessione.createStatement();
+			ResultSet res1 = st1.executeQuery(query);
+			while(res1.next()) {
+				listaFollower.add(recuperaUtente(res1.getString("email_utente_1")));
+			}
+			res1.close();
+			connessione.close();
+		}catch(SQLException e){
+			e.printStackTrace();
+			
+		}
+		return listaFollower;
+	}
 	
 	
 	//Metodo che data una stringa contenente un email restituisce quell utente
@@ -147,7 +162,7 @@ public class UtenteDao{
 			ResultSet res1 = st1.executeQuery(query);
 			// String imgProfilo, String descrizione,String password
 			res1.next();
-			Utente utenteRicercato = new Utente(res1.getString("username"),res1.getString("email"),res1.getString("img_profilo"),res1.getString("descrizione"),res1.getString("password"));
+			Utente utenteRicercato = new Utente(res1.getString("username"),res1.getString("email"),res1.getString("password"),res1.getString("img_profilo"),res1.getString("descrizione"));
 			res1.close();
 			connessione.close();
 			return utenteRicercato;
@@ -158,16 +173,61 @@ public class UtenteDao{
 		}
 	}
 	
-	
-	//metodo per recuperare tutte le informazioni dell'utente che ha effettuato il login
-	public static Utente getUtente() {
-		return utenteCorrente;
+	public void seguiUtente(String emailUtenteDaSeguire) {
+		Connection connessione = DbConnect.getConnection();
+		String query = "insert into seguiti(email_utente_1,email_utente_2) values ('"+getUtenteCorrente().getEmail()+"','"+emailUtenteDaSeguire+"')";
+		try {
+			Statement st1 = connessione.createStatement();
+			//utilizziamo il metodo execute update per la modifica da fare al DataBase
+			st1.executeUpdate(query);
+			connessione.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	
 	
+	public void smettiDiSeguire(String emailUtenteDaNonSeguire) {
+		Connection connessione = DbConnect.getConnection();
+		String query = "delete from seguiti where email_utente_1 = '"+getUtenteCorrente().getEmail()+"' AND email_utente_2 = '"+emailUtenteDaNonSeguire+"'";
+		try {
+			Statement st1 = connessione.createStatement();
+			//utilizziamo il metodo execute update per la modifica da fare al DataBase
+			st1.executeUpdate(query);
+			connessione.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public boolean isSeguito(String emailUtente) {
+		Connection connessione = DbConnect.getConnection();
+		String query = "select COUNT(*) as isSeguito from seguiti where email_utente_1 = '"+getUtenteCorrente().getEmail()+"' AND email_utente_2 = '"+emailUtente+"'";
+		boolean isSeguito = false;
+		try {
+			Statement st1 = connessione.createStatement();
+			ResultSet res1 = st1.executeQuery(query);
+			res1.next();
+			if(res1.getInt("isSeguito") == 1) {
+				isSeguito = true;
+			}
+			else{
+				isSeguito = false;
+			}
+			res1.close();
+			connessione.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return isSeguito;
+	}
+	
 	//Metodo che modifica la descrizione dell'utente corrente
-	public void ModificaDescrizioneUtente(Utente utenteDaModificare,String nuovaDescrizione) {
+	public void modificaDescrizioneUtente(Utente utenteDaModificare,String nuovaDescrizione) {
 		Connection connessione = DbConnect.getConnection();
 		String query = "UPDATE Utente set descrizione = '"+nuovaDescrizione+"'where email ='"+utenteDaModificare.getEmail()+"'";
 		try {
@@ -181,7 +241,7 @@ public class UtenteDao{
 		}
 	}
 	//Metodo che modifica l'immagine di profilo dell'utente corrente
-	public void ModificaImgProfiloUtente(Utente utenteDaModificare,String nuovaImgProfilo) {
+	public void modificaImgProfiloUtente(Utente utenteDaModificare,String nuovaImgProfilo) {
 		Connection connessione = DbConnect.getConnection();
 		String query = "UPDATE Utente set img_profilo = '"+nuovaImgProfilo+"'where email ='"+utenteDaModificare.getEmail()+"'";
 		try {
@@ -193,4 +253,6 @@ public class UtenteDao{
 			e.printStackTrace();
 		}
 	}
+	
+	
 }

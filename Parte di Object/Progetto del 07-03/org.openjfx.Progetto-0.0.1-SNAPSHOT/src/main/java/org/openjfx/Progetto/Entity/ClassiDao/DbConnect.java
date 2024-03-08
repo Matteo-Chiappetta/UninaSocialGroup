@@ -3,10 +3,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class Statement{
-	private static String url = "jdbc:postgresql://localhost:5432/Progetto";
-	static String password ="ciao";
-	static String userName ="postgres";
+public class DbConnect{
+	private static String url = "jdbc:postgresql://localhost:5432/progetto";
+	static String password ="Lanutella99";
+	static String userName ="postgres";	
 	
 	public static Connection getConnection() {
 		Connection con;
@@ -23,7 +23,7 @@ public class Statement{
 		return url;
 	}
 	public static void setUrl(String url) {
-		Statement.url = url;
+		DbConnect.url = url;
 	}
 }
 
