@@ -27,7 +27,7 @@ public class App extends Application {
         stage.setScene(scene);
         stage.setTitle("Unina Social Group");
         //stage.getIcons().add(new Image("file:icon.png"));
-        Image logo = new Image("USG.jpg");
+        Image logo = new Image("USG2.jpg");
         stage.getIcons().add(logo);
         stage.setTitle("UninaSocialGroup");
         stage.show();

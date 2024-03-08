@@ -65,7 +65,7 @@
             </Label>
             <ImageView fx:id="ImgLogo" fitHeight="150.0" fitWidth="188.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <image>
-                  <Image url="@../Immagine/USGtrans.png" />
+                  <Image url="@../Immagine/USG2.jpg" />
                </image>
             </ImageView>
             <Text fill="#4a91ff" strokeType="OUTSIDE" strokeWidth="0.0" underline="true" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="TOP" />
