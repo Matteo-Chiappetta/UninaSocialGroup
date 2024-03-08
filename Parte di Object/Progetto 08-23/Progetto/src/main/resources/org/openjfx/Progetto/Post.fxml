@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="338.0" prefWidth="534.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox layoutX="208.0" layoutY="21.0" minHeight="300.0" prefHeight="326.0" prefWidth="534.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label fx:id="username" prefHeight="48.0" prefWidth="533.0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <JFXTextArea fx:id="didascalia" editable="false" />
+            <HBox prefHeight="113.0" prefWidth="534.0">
+               <children>
+                  <JFXButton fx:id="miPiace" onMouseClicked="#miPiaceClicked" prefHeight="39.0" prefWidth="116.0" />
+                  <JFXButton fx:id="aggiungiCommento" onMouseClicked="#creaCommento" prefHeight="39.0" prefWidth="116.0" text="Commenta" />
+                  <TitledPane expanded="false" prefHeight="103.0" prefWidth="299.0" text="Commenti">
+                     <content>
+                        <JFXListView fx:id="commenti" />
+                     </content>
+                     <HBox.margin>
+                        <Insets top="10.0" />
+                     </HBox.margin>
+                  </TitledPane>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

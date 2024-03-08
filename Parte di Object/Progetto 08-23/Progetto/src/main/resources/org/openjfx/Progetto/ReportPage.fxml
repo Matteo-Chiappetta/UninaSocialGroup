@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="527.0" prefWidth="809.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <GridPane layoutX="41.0" layoutY="122.0" prefHeight="91.0" prefWidth="359.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="291.20001220703125" minWidth="10.0" percentWidth="29.67" prefWidth="178.40001220703124" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="451.20001220703125" minWidth="10.0" percentWidth="70.33" prefWidth="422.3999877929687" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <VBox pickOnBounds="false" prefHeight="200.0" prefWidth="100.0" spacing="5.0" style="-fx-background-color: linear-gradient(to bottom, #7843e6, #ff48dc, #7843e6); -fx-border-color: #7843E6;">
+               <children>
+                  <Button mnemonicParsing="false" style="-fx-background-color: transparent;" VBox.vgrow="ALWAYS">
+                     <VBox.margin>
+                        <Insets left="45.0" top="10.0" />
+                     </VBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <JFXButton layoutX="11.0" layoutY="168.0" prefHeight="26.0" prefWidth="252.0" style="-fx-font-family: 'Arial Rounded MT Bold'; -fx-border-color: #7843E6;" text="Profilo" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <JFXButton prefHeight="26.0" prefWidth="252.0" style="-fx-font-family: 'Arial Rounded MT Bold'; -fx-border-color: #7843E6;" text="Cerca Utenti" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <JFXButton layoutX="10.0" layoutY="168.0" prefHeight="26.0" prefWidth="252.0" style="-fx-font-family: 'Arial Rounded MT Bold'; -fx-border-color: #7843E6;" text="Cerca Gruppo per Nome" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <JFXButton layoutX="10.0" layoutY="199.0" prefHeight="26.0" prefWidth="252.0" style="-fx-font-family: 'Arial Rounded MT Bold'; -fx-border-color: #7843E6;" text="Cerca Gruppo per Tema" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+               </children>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+            </VBox>
+            <MenuBar prefHeight="26.0" prefWidth="494.0" style="-fx-background-color: linear-gradient(to right, #7843e6, #ff48dc, #7843e6); -fx-border-color: #7843E6;" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+              <menus>
+                <Menu mnemonicParsing="false" text="Notifiche">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Close" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Centro Assistenza">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Delete" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+            <Label text="Report Mensile:" GridPane.columnIndex="1" GridPane.valignment="TOP">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="19.0" />
+               </font>
+               <padding>
+                  <Insets left="10.0" top="35.0" />
+               </padding>
+            </Label>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Controlla l'andamento dei tuoi gruppi nell'anno corrente." wrappingWidth="334.51173400878906" GridPane.columnIndex="1" GridPane.valignment="TOP">
+               <GridPane.margin>
+                  <Insets left="10.0" top="58.0" />
+               </GridPane.margin>
+            </Text>
+            <MenuButton mnemonicParsing="false" style="-fx-font-family: 'arial rounded mt bold'; -fx-background-color: #7843e6;" text="Mese" textFill="WHITE" GridPane.columnIndex="1" GridPane.valignment="TOP">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Gennaio" />
+                <MenuItem mnemonicParsing="false" text="Febbraio" />
+                  <MenuItem mnemonicParsing="false" text="Marzo" />
+                  <MenuItem mnemonicParsing="false" text="Aprile" />
+                  <MenuItem mnemonicParsing="false" text="Maggio" />
+                  <MenuItem mnemonicParsing="false" text="Giugno" />
+                  <MenuItem mnemonicParsing="false" text="Luglio" />
+                  <MenuItem mnemonicParsing="false" text="Agosto" />
+                  <MenuItem mnemonicParsing="false" text="Settembre" />
+                  <MenuItem mnemonicParsing="false" text="Ottobre" />
+                  <MenuItem mnemonicParsing="false" text="Novembre" />
+                  <MenuItem mnemonicParsing="false" text="Dicembre" />
+              </items>
+               <GridPane.margin>
+                  <Insets left="10.0" top="85.0" />
+               </GridPane.margin>
+               <cursor>
+                  <Cursor fx:constant="MOVE" />
+               </cursor>
+            </MenuButton>
+            <Text fill="#50565e" layoutX="199.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Di seguito vedrai il report per il mese selezionato." wrappingWidth="334.51173400878906" GridPane.columnIndex="1" GridPane.valignment="TOP">
+               <GridPane.margin>
+                  <Insets left="10.0" top="110.0" />
+               </GridPane.margin>
+            </Text>
+            <ScrollPane prefHeight="442.0" prefWidth="570.0" GridPane.columnIndex="1">
+               <GridPane.margin>
+                  <Insets top="130.0" />
+               </GridPane.margin>
+            </ScrollPane>
+         </children>
+      </GridPane>
+   </children>
+</AnchorPane>
