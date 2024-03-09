@@ -1,0 +1,176 @@
+@font-face {
+    font-family: 'Poppins';
+    src: url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+}
+
+* {
+    -fx-margin: 0;
+    -fx-padding: 0;
+    -fx-outline: none;
+    -fx-box-sizing: border-box;
+    -fx-font-family: 'Poppins';
+}
+
+.body {
+    -fx-display: flex;
+    -fx-align-items: center;
+    -fx-justify-content: center;
+    -fx-min-height: 100vh;
+    -fx-padding: 10px;
+    -fx-background-color: linear-gradient(to right, #56d8e4 10%, #9f01ea 90%);
+}
+
+.container {
+    -fx-max-width: 800px;
+    -fx-background-color: #fff;
+    -fx-width: 800px;
+    -fx-padding: 25px 40px 10px 40px;
+    -fx-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.container .text {
+    -fx-text-alignment: center;
+    -fx-font-size: 41px;
+    -fx-font-weight: bold;
+    -fx-background-color: linear-gradient(to right, #56d8e4, #9f01ea, #56d8e4, #9f01ea);
+    -fx-background-clip: text;
+    -fx-text-fill: transparent;
+}
+
+.container form {
+    -fx-padding: 30px 0 0 0;
+}
+
+.container form .form-row {
+    -fx-display: flex;
+    -fx-margin: 32px 0;
+}
+
+form .form-row .input-data {
+    -fx-width: 100%;
+    -fx-height: 40px;
+    -fx-margin: 0 20px;
+    -fx-position: relative;
+}
+
+form .form-row .textarea {
+    -fx-height: 70px;
+}
+
+.input-data input,
+.textarea textarea {
+    -fx-display: block;
+    -fx-width: 100%;
+    -fx-height: 100%;
+    -fx-border: none;
+    -fx-font-size: 17px;
+    -fx-border-width: 0 0 2px 0;
+    -fx-border-color: rgba(0, 0, 0, 0.12);
+}
+
+.input-data input:focus ~ label,
+.textarea textarea:focus ~ label,
+.input-data input:valid ~ label,
+.textarea textarea:valid ~ label {
+    -fx-translate-y: -20px;
+    -fx-font-size: 14px;
+    -fx-text-fill: #3498db;
+}
+
+.textarea textarea {
+    -fx-resize: none;
+    -fx-padding-top: 10px;
+}
+
+.input-data label {
+    -fx-position: absolute;
+    -fx-pointer-events: none;
+    -fx-bottom: 10px;
+    -fx-font-size: 16px;
+    -fx-transition: all 0.3s ease;
+}
+
+.textarea label {
+    -fx-width: 100%;
+    -fx-bottom: 40px;
+    -fx-background-color: #fff;
+}
+
+.input-data .underline {
+    -fx-position: absolute;
+    -fx-bottom: 0;
+    -fx-height: 2px;
+    -fx-width: 100%;
+}
+
+.input-data .underline:before {
+    -fx-position: absolute;
+    -fx-content: "";
+    -fx-height: 2px;
+    -fx-width: 100%;
+    -fx-background-color: #3498db;
+    -fx-transform: scaleX(0);
+    -fx-transform-origin: center;
+    -fx-transition: transform 0.3s ease;
+}
+
+.input-data input:focus ~ .underline:before,
+.input-data input:valid ~ .underline:before,
+.textarea textarea:focus ~ .underline:before,
+.textarea textarea:valid ~ .underline:before {
+    -fx-transform: scale(1);
+}
+
+.submit-btn .input-data {
+    -fx-overflow: hidden;
+    -fx-height: 45px;
+    -fx-width: 25%;
+}
+
+.submit-btn .input-data .inner {
+    -fx-height: 100%;
+    -fx-width: 300%;
+    -fx-position: absolute;
+    -fx-left: -100%;
+    -fx-background-color: linear-gradient(to right, #56d8e4, #9f01ea, #56d8e4, #9f01ea);
+    -fx-transition: all 0.4s;
+}
+
+.submit-btn .input-data:hover .inner {
+    -fx-left: 0;
+}
+
+.submit-btn .input-data input {
+    -fx-background-color: none;
+    -fx-border: none;
+    -fx-text-fill: #fff;
+    -fx-font-size: 17px;
+    -fx-font-weight: 500;
+    -fx-text-transform: uppercase;
+    -fx-letter-spacing: 1px;
+    -fx-cursor: hand;
+    -fx-position: relative;
+    -fx-z-index: 2;
+}
+
+@media (max-width: 700px) {
+    .container .text {
+        -fx-font-size: 30px;
+    }
+
+    .container form {
+        -fx-padding: 10px 0 0 0;
+    }
+
+    .container form .form-row {
+        -fx-display: block;
+    }
+
+    form .form-row .input-data {
+        -fx-margin: 35px 0;
+    }
+
+    .submit-btn .input-data {
+        -fx-width: 40%;
+    }
+}
