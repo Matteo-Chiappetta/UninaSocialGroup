@@ -93,9 +93,6 @@ public class ControllerReportMensile implements Initializable{
 	public Post getPostConPiuMiPiace(ArrayList<Post> listaPost) {
 		int idPost = 0;
 		int numMiPiace = 0;
-		for(Post PostDa : listaPost) {
-			System.out.println(PostDa);
-		}
 		for(Post postDaControllare : listaPost) {
 			if(numMiPiace <= miPiace.getNumMiPiace(postDaControllare.getIdPost())) {
 				idPost = postDaControllare.getIdPost();
@@ -115,7 +112,6 @@ public class ControllerReportMensile implements Initializable{
 				numMiPiace = miPiace.getNumMiPiace(idPost);
 			}
 		}
-		System.out.println(post.recuperaPost(idPost));
 		return post.recuperaPost(idPost);
 	}
 	
@@ -154,7 +150,6 @@ public class ControllerReportMensile implements Initializable{
 	//inizializzo la lista dei mesi e dei gruppi creati dall'utente
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
 		gruppi.setItems(FXCollections.observableArrayList(gruppo.getListaGruppiCreati(UtenteDao.getUtenteCorrente().getEmail())));
 		creaListaMesi();
 	}

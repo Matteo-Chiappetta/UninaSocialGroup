@@ -20,7 +20,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="609.0" prefWidth="873.0" style="-fx-background-color: linear-gradient(to right, #9967CE,#BA9CF6, #BA9CF6,  #9967CE);" stylesheets="@../StyleCSS/prove.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.Progetto.Controller.ControllerLogin">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="609.0" prefWidth="873.0" style="-fx-background-color: linear-gradient(to right, #9967CE,#BA9CF6, #BA9CF6,  #9967CE);" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.Progetto.Controller.ControllerLogin">
    <children>
       <GridPane layoutX="264.0" layoutY="31.2" prefHeight="548.0" prefWidth="414.0" style="-fx-background-color: #ffffff; -fx-background-radius: 7 7 7 7;" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="31.0">
         <columnConstraints>

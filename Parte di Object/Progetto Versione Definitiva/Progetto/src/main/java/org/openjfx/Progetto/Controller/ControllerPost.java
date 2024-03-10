@@ -109,9 +109,6 @@ public class ControllerPost implements Initializable{
 			loader.setController(new ControllerCommento(commentoCorrente));
 			listaCommenti.add(loader.load()); 
 		}
-		for(Node commentoCorrente : listaCommenti){
-			 System.out.println(commentoCorrente);
-		}
 		return listaCommenti;
 	}
 	
@@ -120,7 +117,6 @@ public class ControllerPost implements Initializable{
 		try {
 			commenti.setItems(FXCollections.observableArrayList(prendiListaCommenti()));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
