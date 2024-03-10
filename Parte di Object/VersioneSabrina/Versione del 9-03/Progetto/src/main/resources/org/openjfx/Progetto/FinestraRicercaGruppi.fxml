@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXListView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="578.0" prefWidth="922.0" style="-fx-background-color: #9967CE;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.Progetto.Controller.RicercaGruppiController">
+   <children>
+      <GridPane layoutX="116.0" layoutY="224.0" prefHeight="578.0" prefWidth="922.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="456.20001220703125" minWidth="10.0" percentWidth="30.0" prefWidth="301.79998779296875" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="620.2000122070312" minWidth="10.0" percentWidth="50.0" prefWidth="620.2000122070312" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="620.2000122070312" minWidth="10.0" percentWidth="20.0" prefWidth="620.2000122070312" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints maxHeight="284.6000122070312" minHeight="10.0" percentHeight="25.0" prefHeight="102.2" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="508.8000183105469" minHeight="10.0" percentHeight="70.0" prefHeight="460.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="499.0000061035156" minHeight="10.0" percentHeight="5.0" prefHeight="24.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <JFXButton fx:id="homeBtn" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#tornaAllaHome" prefHeight="27.0" prefWidth="162.0" ripplerFill="#d562be" style="-fx-background-color: #BA9CF6; -fx-background-radius: 20 20 20 20;" text="Torna Alla Home" textFill="WHITE" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="13.0" />
+               </font>
+               <effect>
+                  <Glow level="0.25" />
+               </effect>
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="15.0" />
+               </GridPane.margin>
+            </JFXButton>
+            <JFXButton onMouseClicked="#vaiInRicercaUtenti" prefHeight="26.0" prefWidth="252.0" style="-fx-font-family: 'Arial Rounded MT Bold'; -fx-border-color: #9967CE; -fx-border-radius: 20 20 20 20; -fx-background-radius: 20 20 20 20; -fx-background-color: #E4DEF9;" text="Cerca Utenti" textFill="#9967ce" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <GridPane.margin>
+                  <Insets top="40.0" />
+               </GridPane.margin>
+            </JFXButton>
+            <Label alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="127.0" style="-fx-background-color: transparent; -fx-font-family: 'Arial Rounded MT Bold'; -fx-font-size: 13;" text="Altre opzioni:" textFill="#e4def9" textOverrun="CLIP" GridPane.rowIndex="1" GridPane.valignment="TOP">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="127.0" style="-fx-background-color: transparent; -fx-font-family: 'Arial Rounded MT Bold'; -fx-font-size: 13;" text="Cerca un gruppo:" textFill="#e4def9" textOverrun="CLIP" GridPane.halignment="RIGHT" GridPane.valignment="BOTTOM">
+               <font>
+                  <Font size="13.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets bottom="20.0" />
+               </GridPane.margin>
+            </Label>
+            <MenuButton mnemonicParsing="false" style="-fx-background-radius: 20 20 20 20; -fx-background-color: #E4DEF9; -fx-border-color: #9967CE; -fx-border-radius: 20 20 20 20;" text="Filtro" textFill="#7b32c9" GridPane.columnIndex="2" GridPane.valignment="BOTTOM">
+              <items>
+                <MenuItem fx:id="tag" mnemonicParsing="false" onAction="#cercaPerTag" style="-fx-background-radius: 20 20  20 20;" text="Tag" />
+                <MenuItem fx:id="tema" mnemonicParsing="false" onAction="#cercaPerTema" style="-fx-background-radius: 20 20 20 20;" text="Tema" />
+              </items>
+               <GridPane.margin>
+                  <Insets bottom="20.0" left="10.0" />
+               </GridPane.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </MenuButton>
+            <TextField fx:id="ricercaGruppi" alignment="TOP_LEFT" promptText="Inserire tema o tag" style="-fx-background-radius: 20 20 20 20;" GridPane.columnIndex="1" GridPane.valignment="BOTTOM">
+               <cursor>
+                  <Cursor fx:constant="TEXT" />
+               </cursor>
+               <GridPane.margin>
+                  <Insets bottom="20.0" />
+               </GridPane.margin>
+            </TextField>
+            <JFXListView fx:id="listaGruppi" onMouseClicked="#vaiInGruppo" prefHeight="518.0" prefWidth="220.0" style="-fx-background-radius: 10 10 10 10;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <ImageView fitHeight="60.0" fitWidth="69.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+               <image>
+                  <Image url="@../Immagine/LogoTRANS.png" />
+               </image>
+            </ImageView>
+         </children>
+      </GridPane>
+   </children>
+</AnchorPane>
