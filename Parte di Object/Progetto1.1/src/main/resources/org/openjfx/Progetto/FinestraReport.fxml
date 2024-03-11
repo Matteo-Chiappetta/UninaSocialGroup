@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="527.0" prefWidth="809.0" style="-fx-background-color: #9967CE;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.Progetto.Controller.ControllerReportMensile">
+   <children>
+      <SplitPane dividerPositions="0.29797979797979796" prefHeight="527.0" prefWidth="809.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: #9967CE;">
+               <children>
+                  <ComboBox fx:id="gruppi" layoutX="43.0" layoutY="64.0" prefWidth="150.0" promptText="Scegli il gruppo" style="-fx-background-color: #E4DEF9; -fx-background-radius: 10 10 0 0;" />
+                  <ComboBox fx:id="listaMesi" layoutX="43.0" layoutY="137.0" prefWidth="150.0" promptText="Scegli un mese" style="-fx-text-fill: #9967CE; -fx-background-color: #E4DEF9; -fx-background-radius: 10 10 0 0;" />
+                  <JFXButton fx:id="report" layoutX="59.0" layoutY="225.0" onMouseClicked="#ottieniReport" prefHeight="25.0" prefWidth="118.0" style="-fx-border-radius: 20 20 20 20; -fx-background-radius: 20 20 20 20; -fx-border-color: #9967CE; -fx-background-color: #E4DEF9;" text="Ottieni Report" textFill="#9967ce">
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="12.0" />
+                     </font></JFXButton>
+                  <Text fx:id="messErrore" fill="WHITE" layoutX="11.0" layoutY="286.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="215.99996948242188">
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="14.0" />
+                     </font>
+                  </Text>
+                  <JFXButton fx:id="homeBtn" layoutX="37.0" layoutY="465.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#tornaAllaHome" prefHeight="27.0" prefWidth="162.0" ripplerFill="#d562be" style="-fx-background-color: #BA9CF6; -fx-background-radius: 20 20 20 20;" text="Torna Alla Home" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="13.0" />
+                     </font>
+                     <effect>
+                        <Glow level="0.25" />
+                     </effect>
+                  </JFXButton>
+                  <Text fx:id="mediaPost" fill="WHITE" layoutX="11.0" layoutY="286.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="215.99996948242188">
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="14.0" />
+                     </font>
+                  </Text>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <TabPane layoutX="182.0" layoutY="163.0" prefHeight="525.0" prefWidth="564.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <tabs>
+                      <Tab fx:id="piuLike" style="-fx-background-color: #E4DEF9; -fx-border-color: #9967CE; -fx-border-radius: 10 10 0 0; -fx-background-radius: 10 10 0 0; -fx-font-family: 'arial rounded mt bold'; -fx-text-base-color: #9967CE;" text="Post con piu mi piace">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                        </content>
+                      </Tab>
+                      <Tab fx:id="menoLike" style="-fx-background-color: #E4DEF9; -fx-border-color: #9967CE; -fx-border-radius: 10 10 0 0; -fx-background-radius: 10 10 0 0; -fx-font-family: 'arial rounded mt bold'; -fx-text-base-color: #9967CE;" text="Post con meno mi piace">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                        </content>
+                      </Tab>
+                        <Tab fx:id="piuCommenti" style="-fx-background-color: #E4DEF9; -fx-border-color: #9967CE; -fx-border-radius: 10 10 0 0; -fx-background-radius: 10 10 0 0; -fx-font-family: 'arial rounded mt bold'; -fx-text-base-color: #9967CE;" text="Post con piu commenti">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                           </content>
+                        </Tab>
+                        <Tab fx:id="menoCommenti" style="-fx-background-color: #E4DEF9; -fx-border-color: #9967CE; -fx-border-radius: 10 10 0 0; -fx-background-radius: 10 10 0 0; -fx-font-family: 'arial rounded mt bold'; -fx-text-base-color: #9967CE;" text="Post con meno commenti">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                           </content>
+                        </Tab>
+                    </tabs>
+                  </TabPane>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>
